@@ -37,6 +37,7 @@ class PermissionSeeder extends Seeder
 
         ]);
 
+        //super admin role
         $super_admin = Role::create([
             'name' => 'Super Admin',
             'guard_name' => 'web',
@@ -44,6 +45,35 @@ class PermissionSeeder extends Seeder
         ]);
         $permissions = Permission::all();
         $super_admin->syncPermissions($permissions);
+
+        //teacher role
+        $teacher = Role::create([
+            'name' => 'Teacher',
+            'guard_name' => 'web',
+            'description' => 'Teacher Role',
+        ]);
+        $teacher->syncPermissions([
+            'Add Course',
+            'View Course',
+            'Edit Course',
+            'Delete Course',
+
+            'Add Student',
+            'View Student',
+            'Edit Student',
+            'Delete Student',
+        ]);
+
+        //student role
+        $student = Role::create([
+            'name' => 'Student',
+            'guard_name' => 'web',
+            'description' => 'Student Role',
+        ]);
+        $student->syncPermissions([
+            'View Course',
+        ]);
+        
         
         $admin = User::create([
             'username' => 'admin',

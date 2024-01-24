@@ -33,7 +33,14 @@ class RoleController extends Controller
             'guard_name'=>'web',
             'description'=>$request->description,   
         ]);
-        $role->syncPermissions($request->permissions);
+        $data = array();
+        foreach ($request->permissions as $key => $item){
+           $data[$key] = (int)$item;
+        }
+        
+        if (!empty($data)){
+           $role->syncPermissions($data);
+        }
         return redirect()->route('viewroles')->with('success','Role Added Successfully');
     }
 
@@ -44,6 +51,7 @@ class RoleController extends Controller
 
     public function edit($id)
     {
+        $id = decrypt($id);
         $role = Role::find($id);
         $permissions = Permission::all();
         return view('menu.user_management.roles.edit' , compact('role','permissions'));
@@ -51,11 +59,29 @@ class RoleController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $id = decrypt($id);
+        $this->validate($request,[
+            'role'=>'required|max:255',
+        ]);
+        $role = Role::find($id);
+        $role->name = $request->role;
+        $role->description = $request->description;
+        $role->save();
+        $data = array();
+        foreach ($request->permissions as $key => $item){
+           $data[$key] = (int)$item;
+        }
+        
+        if (!empty($data)){
+           $role->syncPermissions($data);
+        }
+        return redirect()->route('viewroles')->with('success','Role Updated Successfully');
     }
 
     public function destroy($id)
     {
-        //
+        $id = decrypt($id);
+        Role::find($id)->delete();
+        return redirect()->route('viewroles')->with('success','Role Deleted Successfully');
     }
 }
