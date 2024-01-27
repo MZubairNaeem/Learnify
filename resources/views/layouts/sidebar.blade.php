@@ -32,21 +32,27 @@
             </div>
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span>@lang('translation.menu')</span></li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#user_management" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="user_management">
-                        <i class="ri-user-line"></i> <span>User Management</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="user_management">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="{{ route('viewroles') }}" class="nav-link">Roles</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('addusers') }}" class="nav-link">Users</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li> <!-- end Dashboard Menu -->
+                @canany(['View Role', 'View User'])
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="#user_management" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="user_management">
+                            <i class="ri-user-line"></i> <span>User Management</span>
+                        </a>
+                        <div class="collapse menu-dropdown" id="user_management">
+                            <ul class="nav nav-sm flex-column">
+                                @can('View Role')
+                                    <li class="nav-item">
+                                        <a href="{{ route('viewroles') }}" class="nav-link">Roles</a>
+                                    </li>
+                                @endcan
+                                @can('View User')
+                                    <li class="nav-item">
+                                        <a href="{{ route('viewusers') }}" class="nav-link">Users</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </div>
+                    </li> <!-- end Dashboard Menu -->
+                @endcanany
             </ul>
         </div>
         <!-- Sidebar -->

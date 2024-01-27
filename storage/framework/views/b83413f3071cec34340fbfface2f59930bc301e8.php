@@ -45,12 +45,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 mb-3">
-                                    <label for="description" class="form-label">Role Description<span
-                                            style="color: red"> *</span></label>
+                                    <label for="description" class="form-label">Role Description<span style="color: red">
+                                            *</span></label>
                                     <div>
                                         <input type="text" value="<?php echo e($role->description); ?>"
-                                            class="form-control form-control-icon" id="description"
-                                            name="description" placeholder="Enter Description">
+                                            class="form-control form-control-icon" id="description" name="description"
+                                            placeholder="Enter Description">
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3 form-group">

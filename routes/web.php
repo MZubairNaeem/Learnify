@@ -16,10 +16,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::controller(UserController::class)->group(function(){
         Route::prefix('users')->group(function () {
             Route::get('/list','index')->name('viewusers');
-            Route::get('/create','create')->name('addusers');
+            Route::get('/create','create')->name('adduser');
             Route::post('/store','store')->name('storeuser');
+            Route::get('/edit/{id}','edit')->name('edituser');
             Route::post('/update/{id}','update')->name('updateuser');
-            Route::delete('/delete/{id}','destroy')->name('deleteusers');
+            Route::delete('/delete/{id}','destroy')->name('deleteuser');
         });
     });
 
@@ -27,9 +28,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::controller(RoleController::class)->group(function(){
         Route::prefix('roles')->group(function () {
             Route::get('/list','index')->name('viewroles');
-            Route::get('/create','create')->name('addroles');
+            Route::get('/create','create')->name('addrole');
             Route::post('/store','store')->name('storerole');
-            Route::get('/edit/{id}','edit')->name('editroles');
+            Route::get('/edit/{id}','edit')->name('editrole');
             Route::post('/update/{id}','update')->name('updaterole');
             Route::delete('/delete/{id}','destroy')->name('deleterole');
         });

@@ -460,12 +460,12 @@
                             <span class="text-start ms-xl-2">
                                 <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{Auth::user()->username}}</span>
                                 <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">
-                                    @if (Auth::user()->usertype == '0')
-                                    Admin
-                                    @elseif (Auth::user()->usertype == '1')
-                                    Teacher
-                                    @elseif (Auth::user()->usertype == '2')
-                                    Student
+                                    @if (Auth::user()->roles->count() > 0)
+                                        @foreach (Auth::user()->roles as $role)
+                                            {{ $role->name }}
+                                        @endforeach
+                                    @else
+                                        No Role
                                     @endif
                                 </span>
                             </span>

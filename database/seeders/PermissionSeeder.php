@@ -19,6 +19,11 @@ class PermissionSeeder extends Seeder
             ['name' => 'Edit Role','guard_name' => 'web', 'created_at' => now()],
             ['name' => 'Delete Role','guard_name' => 'web','created_at' => now()],
 
+            ['name' => 'Add User','guard_name' => 'web','created_at' => now()],
+            ['name' => 'View User','guard_name' => 'web','created_at' => now()],
+            ['name' => 'Edit User','guard_name' => 'web','created_at' => now()],
+            ['name' => 'Delete User','guard_name' => 'web','created_at' => now()],
+
             ['name' => 'Add Teacher','guard_name' => 'web','created_at' => now()],
             ['name' => 'View Teacher','guard_name' => 'web','created_at' => now()],
             ['name' => 'Edit Teacher','guard_name' => 'web','created_at' => now()],                
@@ -80,7 +85,6 @@ class PermissionSeeder extends Seeder
             'email' => 'admin@learnify.com',
             'password' => Hash::make('123456'),
             'email_verified_at'=>'2022-01-02 17:04:58',
-            'usertype' => '0',
             'created_at' => now(),
         ]);
         $admin->assignRole($super_admin);

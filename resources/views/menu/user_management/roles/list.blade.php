@@ -20,13 +20,14 @@
             List
         @endslot
     @endcomponent
+    @include('partials.session')
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
                         <h5 class="card-title mb-0">Roles</h5>
-                        <a href="{{ route('addroles') }}" type="button" class="btn btn-sm btn-primary">Add New</a>
+                        <a href="{{ route('addrole') }}" type="button" class="btn btn-sm btn-primary">Add New</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -65,7 +66,7 @@
                                     <td style="white-space: normal !important;">
                                         @if ($role->name != 'Super Admin')
                                             @can('Edit Role')
-                                                <a href="{{ route('editroles',  encrypt($role->id)) }}"
+                                                <a href="{{ route('editrole',  encrypt($role->id)) }}"
                                                     class="btn btn-sm btn-success">Edit</a>
                                             @endcan
                                             @if ($role->name != 'Teacher' && $role->name != 'Student')

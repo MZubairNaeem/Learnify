@@ -32,12 +32,16 @@
                         <?php echo csrf_field(); ?>
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="role" class="form-label">Role</label>
+                                <label for="role" class="form-label">Role
+                                    <span style="color: red"> *</span>
+                                </label>
                                 <input required type="text" class="form-control" name="role" placeholder="Role">
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label for="description" class="form-label">Description</label>
+                                <label for="description" class="form-label">Description
+                                    <span style="color: red"> *</span>
+                                </label>
                                 <textarea
                                 rows="1"
                                 type="text" class="form-control" name="description" placeholder="Description"></textarea>
@@ -46,7 +50,8 @@
                                 <label for="choices-multiple-remove-button" class="form-label">
                                     Select Permissions for Role<span style="color: red"> *</span>
                                 </label>
-                                <select required class="js-example-basic-multiple" name="permissions[]" multiple="multiple"> 
+                                <select required class="js-example-basic-multiple" name="permissions[]" 
+                                multiple="multiple"> 
                                     <?php $__currentLoopData = $permissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $permission): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($permission->id); ?>"><?php echo e($permission->name); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

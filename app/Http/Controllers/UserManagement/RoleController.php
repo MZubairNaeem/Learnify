@@ -81,7 +81,13 @@ class RoleController extends Controller
     public function destroy($id)
     {
         $id = decrypt($id);
-        Role::find($id)->delete();
+        //check if role assigned to any user
+        $role = Role::find($id);
+        $users = $role->users;
+        if (count($users) > 0){
+            return redirect()->route('viewroles')->with('error','Role is assigned to user(s). Please remove role from user(s) first');
+        }
+        $role->delete();
         return redirect()->route('viewroles')->with('success','Role Deleted Successfully');
     }
 }

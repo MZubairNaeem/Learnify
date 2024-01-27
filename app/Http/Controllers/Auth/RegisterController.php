@@ -30,17 +30,20 @@ class RegisterController extends Controller
     }
     protected function create(array $data)
     {
-        if ($data['role'] == 'teacher') {
-            $role = '1';
-        } else if ($data['role'] == 'student') {
-            $role = '2';
-        }
-        return User::create([
+        $user = User::create([
             'username' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            // 0 for admin, 1 for teacher, 2 for student
-            'usertype' => $role,
         ]);
+        $user = User::find($user->id);
+
+        if ($data['role'] == 'teacher') {
+            //assign teacher role to user
+            $user->assignRole('Teacher');
+        } else if ($data['role'] == 'student') {
+            //assign student role to user
+            $user->assignRole('Student');
+        }
+        return $user;
     }
 }

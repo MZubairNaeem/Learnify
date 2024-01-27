@@ -19,13 +19,14 @@
             List
         <?php $__env->endSlot(); ?>
     <?php echo $__env->renderComponent(); ?>
+    <?php echo $__env->make('partials.session', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
                         <h5 class="card-title mb-0">Roles</h5>
-                        <a href="<?php echo e(route('addroles')); ?>" type="button" class="btn btn-sm btn-primary">Add New</a>
+                        <a href="<?php echo e(route('addrole')); ?>" type="button" class="btn btn-sm btn-primary">Add New</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -64,7 +65,7 @@
                                     <td style="white-space: normal !important;">
                                         <?php if($role->name != 'Super Admin'): ?>
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Edit Role')): ?>
-                                                <a href="<?php echo e(route('editroles',  encrypt($role->id))); ?>"
+                                                <a href="<?php echo e(route('editrole',  encrypt($role->id))); ?>"
                                                     class="btn btn-sm btn-success">Edit</a>
                                             <?php endif; ?>
                                             <?php if($role->name != 'Teacher' && $role->name != 'Student'): ?>

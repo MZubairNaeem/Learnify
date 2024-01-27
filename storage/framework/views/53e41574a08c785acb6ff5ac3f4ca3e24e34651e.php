@@ -1,21 +1,20 @@
-@extends('layouts.master')
-@section('title') User @endsection
+<?php $__env->startSection('title'); ?> User <?php $__env->stopSection(); ?>
 
-@section('css')
+<?php $__env->startSection('css'); ?>
 <!-- Select2 css-->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <!-- Breadcrumb Trail -->
-@component('components.breadcrumb')
-@slot('li_1')
+<?php $__env->startComponent('components.breadcrumb'); ?>
+<?php $__env->slot('li_1'); ?>
     Users
-@endslot
-@slot('title')
+<?php $__env->endSlot(); ?>
+<?php $__env->slot('title'); ?>
     Edit
-@endslot
-@endcomponent
+<?php $__env->endSlot(); ?>
+<?php echo $__env->renderComponent(); ?>
 
 <!-- Session Messages -->
 
@@ -28,8 +27,8 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <form method="POST" action="{{ route('updateuser', encrypt($user->id)) }}" enctype="multipart/form-data">
-                        @csrf
+                    <form method="POST" action="<?php echo e(route('updateuser', encrypt($user->id))); ?>" enctype="multipart/form-data">
+                        <?php echo csrf_field(); ?>
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="username" class="form-label"
@@ -37,7 +36,7 @@
                                     <span style="color: red"> *</span>
                                 </label>
                                 <input required type="text" class="form-control" name="username" 
-                                value="{{ $user->username }}"
+                                value="<?php echo e($user->username); ?>"
                                 placeholder="Username">
                             </div>
 
@@ -47,7 +46,7 @@
                                 </label>
                                 <input
                                 type="email" class="form-control" name="email" 
-                                value="{{ $user->email }}"
+                                value="<?php echo e($user->email); ?>"
                                 placeholder="Email">
                             </div>
                             <div class="col-md-6 mb-3">
@@ -62,25 +61,26 @@
                                 <label for="role" class="form-label">Role</label>
                                 <select class="form-select" aria-label=".form-select-sm example"name="role">
                                     <option selected>Select Role</option>
-                                    @foreach ($roles as $role)
-                                        @if ($role->name != 'Super Admin')
-                                            <option value="{{ $role->name }}"
-                                                @if ($user->roles->count() > 0)
-                                                    @foreach ($user->roles as $user_role)
-                                                        @if ($user_role->name == $role->name)
+                                    <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php if($role->name != 'Super Admin'): ?>
+                                            <option value="<?php echo e($role->name); ?>"
+                                                <?php if($user->roles->count() > 0): ?>
+                                                    <?php $__currentLoopData = $user->roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user_role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <?php if($user_role->name == $role->name): ?>
                                                             selected
-                                                        @endif
-                                                    @endforeach
-                                                @endif
+                                                        <?php endif; ?>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                <?php endif; ?>
                                                 
-                                                >{{ $role->name }}
+                                                ><?php echo e($role->name); ?>
+
                                             </option>
-                                        @endif
-                                    @endforeach
+                                        <?php endif; ?>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
                             <div class="col-md-12 form-group mb-2">
-                                <a style="margin-right:3px;" href="{{ route('viewusers') }}" class="btn btn-danger btn-sm">Cancel</a>
+                                <a style="margin-right:3px;" href="<?php echo e(route('viewusers')); ?>" class="btn btn-danger btn-sm">Cancel</a>
                                 <input type="submit" class="btn btn-success btn-sm">
                             </div>
                         </div>
@@ -91,18 +91,19 @@
     </div>
 </div>
 
-@endsection
-@section('script')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
 <!-- jQuery CDN -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <!-- Select2 cdn -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script src="{{ URL::asset('assets/js/pages/select2.init.js') }}"></script>
+<script src="<?php echo e(URL::asset('assets/js/pages/select2.init.js')); ?>"></script>
 <!-- Input Mask -->
-<script src="{{ URL::asset('assets/libs/cleave.js/cleave.js.min.js') }}"></script>
-<script src="{{ URL::asset('assets/js/pages/form-masks.init.js') }}"></script>
+<script src="<?php echo e(URL::asset('assets/libs/cleave.js/cleave.js.min.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('assets/js/pages/form-masks.init.js')); ?>"></script>
 <!-- App JS -->
-<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+<script src="<?php echo e(URL::asset('/assets/js/app.min.js')); ?>"></script>
 
-<script src="{{ URL::asset('assets/libs/prismjs/prismjs.min.js') }}"></script>
-@endsection
+<script src="<?php echo e(URL::asset('assets/libs/prismjs/prismjs.min.js')); ?>"></script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH Z:\ZappFinity\LMS\learnify\resources\views/menu/user_management/users/edit.blade.php ENDPATH**/ ?>

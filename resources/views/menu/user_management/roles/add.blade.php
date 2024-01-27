@@ -33,12 +33,16 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="role" class="form-label">Role</label>
+                                <label for="role" class="form-label">Role
+                                    <span style="color: red"> *</span>
+                                </label>
                                 <input required type="text" class="form-control" name="role" placeholder="Role">
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label for="description" class="form-label">Description</label>
+                                <label for="description" class="form-label">Description
+                                    <span style="color: red"> *</span>
+                                </label>
                                 <textarea
                                 rows="1"
                                 type="text" class="form-control" name="description" placeholder="Description"></textarea>
@@ -47,7 +51,8 @@
                                 <label for="choices-multiple-remove-button" class="form-label">
                                     Select Permissions for Role<span style="color: red"> *</span>
                                 </label>
-                                <select required class="js-example-basic-multiple" name="permissions[]" multiple="multiple"> 
+                                <select required class="js-example-basic-multiple" name="permissions[]" 
+                                multiple="multiple"> 
                                     @foreach ($permissions as $permission)
                                         <option value="{{ $permission->id }}">{{ $permission->name }}</option>
                                     @endforeach

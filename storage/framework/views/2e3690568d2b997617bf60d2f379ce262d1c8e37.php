@@ -460,12 +460,13 @@
                             <span class="text-start ms-xl-2">
                                 <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text"><?php echo e(Auth::user()->username); ?></span>
                                 <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">
-                                    <?php if(Auth::user()->usertype == '0'): ?>
-                                    Admin
-                                    <?php elseif(Auth::user()->usertype == '1'): ?>
-                                    Teacher
-                                    <?php elseif(Auth::user()->usertype == '2'): ?>
-                                    Student
+                                    <?php if(Auth::user()->roles->count() > 0): ?>
+                                        <?php $__currentLoopData = Auth::user()->roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <?php echo e($role->name); ?>
+
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php else: ?>
+                                        No Role
                                     <?php endif; ?>
                                 </span>
                             </span>
