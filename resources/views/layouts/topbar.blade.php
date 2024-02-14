@@ -6,24 +6,25 @@
                 <div class="navbar-brand-box horizontal-logo">
                     <a href="index" class="logo logo-dark">
                         <span class="logo-sm">
-                            <img src="{{ URL::asset('assets/images/logo-sm.png') }}" alt="" height="22">
+                            {{-- <img src="{{ URL::asset('assets/images/logo-sm.png') }}" alt="" height="22"> --}}
                         </span>
                         <span class="logo-lg">
-                            <img src="{{ URL::asset('assets/images/logo-dark.png') }}" alt="" height="17">
+                            {{-- <img src="{{ URL::asset('assets/images/logo-dark.png') }}" alt="" height="17"> --}}
                         </span>
                     </a>
 
                     <a href="index" class="logo logo-light">
                         <span class="logo-sm">
-                            <img src="{{ URL::asset('assets/images/logo-sm.png') }}" alt="" height="22">
+                            {{-- <img src="{{ URL::asset('assets/images/logo-sm.png') }}" alt="" height="22"> --}}
                         </span>
                         <span class="logo-lg">
-                            <img src="{{ URL::asset('assets/images/logo-light.png') }}" alt="" height="17">
+                            {{-- <img src="{{ URL::asset('assets/images/logo-light.png') }}" alt="" height="17"> --}}
                         </span>
                     </a>
                 </div>
 
-                <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger" id="topnav-hamburger-icon">
+                <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger"
+                    id="topnav-hamburger-icon">
                     <span class="hamburger-icon">
                         <span></span>
                         <span></span>
@@ -33,7 +34,7 @@
 
 
                 <!-- App Search-->
-                <form class="app-search d-none d-md-block">
+                {{-- <form class="app-search d-none d-md-block">
                     <div class="position-relative">
                         <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
                             id="search-options" value="">
@@ -124,7 +125,7 @@
                                     class="ri-arrow-right-line ms-1"></i></a>
                         </div>
                     </div>
-                </form>
+                </form> --}}
             </div>
 
             <div class="d-flex align-items-center">
@@ -150,7 +151,7 @@
                     </div>
                 </div>
 
-
+                {{-- 
                 <div class="dropdown topbar-head-dropdown ms-1 header-item">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
                         id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -449,16 +450,18 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="dropdown ms-sm-3 header-item topbar-user">
                     <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
-                            <img class="rounded-circle header-profile-user" src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
+                            <img class="rounded-circle header-profile-user"
+                                src="@if (Auth::user()->avatar != '') {{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }} @endif"
                                 alt="Header Avatar">
                             <span class="text-start ms-xl-2">
-                                <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{Auth::user()->username}}</span>
+                                <span
+                                    class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ Auth::user()->username }}</span>
                                 <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">
                                     @if (Auth::user()->roles->count() > 0)
                                         @foreach (Auth::user()->roles as $role)

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserManagement\RoleController;
 use App\Http\Controllers\UserManagement\UserController;
+use App\Http\Controllers\CourseManagement\CourseController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +34,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/edit/{id}','edit')->name('editrole');
             Route::post('/update/{id}','update')->name('updaterole');
             Route::delete('/delete/{id}','destroy')->name('deleterole');
+        });
+    });
+
+    //course routes
+    Route::controller(CourseController::class)->group(function(){
+        Route::prefix('courses')->group(function () {
+            Route::get('/list','index')->name('viewcourses');
+            Route::get('/create','create')->name('addcourse');
+            Route::post('/store','store')->name('storecourse');
+            Route::get('/edit/{id}','edit')->name('editcourse');
+            Route::post('/update/{id}','update')->name('updatecourse');
+            Route::delete('/delete/{id}','destroy')->name('deletecourse');
         });
     });
 
