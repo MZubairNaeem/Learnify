@@ -26,6 +26,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/edit/{id}', 'edit')->name('edituser');
             Route::post('/update/{id}', 'update')->name('updateuser');
             Route::delete('/delete/{id}', 'destroy')->name('deleteuser');
+
+            //get students
+            Route::get('/students', 'getStudents')->name('getstudents');
+            //get teachers
+            Route::get('/teachers', 'getTeachers')->name('getteachers');
         });
     });
 

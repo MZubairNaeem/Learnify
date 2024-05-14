@@ -71,14 +71,14 @@
                 @endcanany
                 {{-- @canany(['View Course']) --}}
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('viewcourses') }}">
+                    <a class="nav-link menu-link" href="{{ route('getteachers') }}">
                         <i class=" ri-user-6-fill"></i> <span>Teachers</span>
                     </a>
                 </li> <!-- end Dashboard Menu -->
                 {{-- @endcanany --}}
                 {{-- @canany(['View Course']) --}}
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('viewcourses') }}">
+                    <a class="nav-link menu-link" href="{{ route('getstudents') }}">
                         <i class=" ri-user-2-line"></i> <span>Students</span>
                     </a>
                 </li> <!-- end Dashboard Menu -->

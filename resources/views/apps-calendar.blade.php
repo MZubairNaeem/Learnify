@@ -17,59 +17,9 @@
     <div class="row">
         <div class="col-12">
             <div class="row">
-                <div class="col-xl-3">
-                    <div class="card card-h-100">
-                        <div class="card-body">
-                            <button class="btn btn-primary w-100" id="btn-new-event"><i class="mdi mdi-plus"></i> Create New
-                                Event</button>
-
-                            <div id="external-events">
-                                <br>
-                                <p class="text-muted">Drag and drop your event or click in the calendar</p>
-                                <div class="external-event fc-event bg-soft-success text-success"
-                                    data-class="bg-soft-success">
-                                    <i class="mdi mdi-checkbox-blank-circle font-size-11 me-2"></i>New Event
-                                    Planning
-                                </div>
-                                <div class="external-event fc-event bg-soft-info text-info" data-class="bg-soft-info">
-                                    <i class="mdi mdi-checkbox-blank-circle font-size-11 me-2"></i>Meeting
-                                </div>
-                                <div class="external-event fc-event bg-soft-warning text-warning"
-                                    data-class="bg-soft-warning">
-                                    <i class="mdi mdi-checkbox-blank-circle font-size-11 me-2"></i>Generating
-                                    Reports
-                                </div>
-                                <div class="external-event fc-event bg-soft-danger text-danger" data-class="bg-soft-danger">
-                                    <i class="mdi mdi-checkbox-blank-circle font-size-11 me-2"></i>Create
-                                    New theme
-                                </div>
-                            </div>
-
-                        </div>
+                <div class="col-12">
+                    <div id="external-events">
                     </div>
-                    <div>
-                        <h5 class="mb-1">Upcoming Events</h5>
-                        <p class="text-muted">Don't miss scheduled events</p>
-                        <div class="pe-2 me-n1 mb-3" data-simplebar style="height: 400px">
-                            <div id="upcoming-event-list"></div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-body bg-soft-info">
-                            <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                    <i data-feather="calendar" class="text-info icon-dual-info"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h6 class="fs-15">Welcome to your Calendar!</h6>
-                                    <p class="text-muted mb-0">Event that applications book will appear here. Click on an
-                                        event to see the details and manage applicants event.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--end card-->
                 </div> <!-- end col-->
 
                 <div class="col-xl-9">
@@ -82,7 +32,7 @@
             </div>
             <!--end row-->
 
-            <div style='clear:both'></div>
+            {{-- <div style='clear:both'></div> --}}
 
             <!-- Add New Event MODAL -->
             <div class="modal fade" id="event-modal" tabindex="-1">
@@ -90,14 +40,13 @@
                     <div class="modal-content border-0">
                         <div class="modal-header p-3 bg-soft-info">
                             <h5 class="modal-title" id="modal-title">Event</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-hidden="true"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                         </div>
                         <div class="modal-body p-4">
                             <form class="needs-validation" name="event-form" id="form-event" novalidate>
                                 <div class="text-end">
-                                    <a href="#" class="btn btn-sm btn-soft-primary" id="edit-event-btn" data-id="edit-event"
-                                        onclick="editEvent(this)" role="button">Edit</a>
+                                    <a href="#" class="btn btn-sm btn-soft-primary" id="edit-event-btn"
+                                        data-id="edit-event" onclick="editEvent(this)" role="button">Edit</a>
                                 </div>
                                 <div class="event-details">
                                     <div class="d-flex mb-2">
@@ -116,7 +65,8 @@
                                         </div>
                                         <div class="flex-grow-1">
                                             <h6 class="d-block fw-semibold mb-0"><span id="event-timepicker1-tag"></span> -
-                                                <span id="event-timepicker2-tag"></span></h6>
+                                                <span id="event-timepicker2-tag"></span>
+                                            </h6>
                                         </div>
                                     </div>
                                     <div class="d-flex align-items-center mb-2">

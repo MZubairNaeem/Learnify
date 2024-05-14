@@ -71,14 +71,14 @@
                 <?php endif; ?>
                 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="<?php echo e(route('viewcourses')); ?>">
+                    <a class="nav-link menu-link" href="<?php echo e(route('getteachers')); ?>">
                         <i class=" ri-user-6-fill"></i> <span>Teachers</span>
                     </a>
                 </li> <!-- end Dashboard Menu -->
                 
                 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="<?php echo e(route('viewcourses')); ?>">
+                    <a class="nav-link menu-link" href="<?php echo e(route('getstudents')); ?>">
                         <i class=" ri-user-2-line"></i> <span>Students</span>
                     </a>
                 </li> <!-- end Dashboard Menu -->
