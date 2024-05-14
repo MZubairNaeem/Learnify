@@ -3,6 +3,7 @@
 use App\Http\Controllers\UserManagement\RoleController;
 use App\Http\Controllers\UserManagement\UserController;
 use App\Http\Controllers\CourseManagement\CourseController;
+use App\Http\Controllers\Attendance\AttendanceController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -14,38 +15,52 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [HomeController::class, 'root'])->name('root');
 
     //user routes
-    Route::controller(UserController::class)->group(function(){
+    Route::controller(UserController::class)->group(function () {
         Route::prefix('users')->group(function () {
-            Route::get('/list','index')->name('viewusers');
-            Route::get('/create','create')->name('adduser');
-            Route::post('/store','store')->name('storeuser');
-            Route::get('/edit/{id}','edit')->name('edituser');
-            Route::post('/update/{id}','update')->name('updateuser');
-            Route::delete('/delete/{id}','destroy')->name('deleteuser');
+            Route::get('/list', 'index')->name('viewusers');
+            Route::get('/create', 'create')->name('adduser');
+            Route::post('/store', 'store')->name('storeuser');
+            Route::get('/edit/{id}', 'edit')->name('edituser');
+            Route::post('/update/{id}', 'update')->name('updateuser');
+            Route::delete('/delete/{id}', 'destroy')->name('deleteuser');
         });
     });
 
     //role routes
-    Route::controller(RoleController::class)->group(function(){
+    Route::controller(RoleController::class)->group(function () {
         Route::prefix('roles')->group(function () {
-            Route::get('/list','index')->name('viewroles');
-            Route::get('/create','create')->name('addrole');
-            Route::post('/store','store')->name('storerole');
-            Route::get('/edit/{id}','edit')->name('editrole');
-            Route::post('/update/{id}','update')->name('updaterole');
-            Route::delete('/delete/{id}','destroy')->name('deleterole');
+            Route::get('/list', 'index')->name('viewroles');
+            Route::get('/create', 'create')->name('addrole');
+            Route::post('/store', 'store')->name('storerole');
+            Route::get('/edit/{id}', 'edit')->name('editrole');
+            Route::post('/update/{id}', 'update')->name('updaterole');
+            Route::delete('/delete/{id}', 'destroy')->name('deleterole');
         });
     });
 
     //course routes
-    Route::controller(CourseController::class)->group(function(){
+    Route::controller(CourseController::class)->group(function () {
         Route::prefix('courses')->group(function () {
-            Route::get('/list','index')->name('viewcourses');
-            Route::get('/create','create')->name('addcourse');
-            Route::post('/store','store')->name('storecourse');
-            Route::get('/edit/{id}','edit')->name('editcourse');
-            Route::post('/update/{id}','update')->name('updatecourse');
-            Route::delete('/delete/{id}','destroy')->name('deletecourse');
+            Route::get('/list', 'index')->name('viewcourses');
+            Route::get('/create', 'create')->name('addcourse');
+            Route::post('/store', 'store')->name('storecourse');
+            Route::get('/show/{id}', 'show')->name('showcourse');
+            Route::get('/edit/{id}', 'edit')->name('editcourse');
+            Route::post('/update/{id}', 'update')->name('updatecourse');
+            Route::post('/delete/{id}', 'destroy')->name('deletecourse');
+            Route::post('/addstudenttocourse', 'addStudentToCourse')->name('addstudenttocourse');
+        });
+    });
+
+    //attendance routes
+    Route::controller(AttendanceController::class)->group(function () {
+        Route::prefix('attendance')->group(function () {
+            Route::get('/list', 'index')->name('viewattendance');
+            Route::get('/create', 'create')->name('addattendance');
+            Route::post('/store', 'store')->name('storeeattendance');
+            Route::get('/edit/{id}', 'edit')->name('editattendance');
+            Route::post('/update/{id}', 'update')->name('updateattendance');
+            Route::delete('/delete/{id}', 'destroy')->name('deleteattendance');
         });
     });
 
@@ -56,3 +71,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('roo
 // Update User Details
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+
+Route::get('/apps-ecommerce-products', function () {
+    return view('apps-ecommerce-products');
+});

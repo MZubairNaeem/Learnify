@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Roles
+    Course
 @endsection
 
 @section('css')
@@ -12,10 +12,10 @@
     <!-- Breadcrumb Trail -->
     @component('components.breadcrumb')
         @slot('li_1')
-            Roles
+            Course
         @endslot
         @slot('title')
-            Add
+            Edit
         @endslot
     @endcomponent
 
@@ -27,48 +27,53 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h1 class="card-title mb-0">Add Role</h1>
+                    <h1 class="card-title mb-0">Add Course</h1>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <form method="POST" action="{{ route('updaterole', encrypt($role->id)) }}"
-                            enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('updatecourse', $course->id) }}">
                             @csrf
                             @method('POST')
                             <div class="row">
-                                <div class="form-group col-md-6 mb-3">
-                                    <label for="role" class="form-label">Role Name<span style="color: red">
-                                            *</span></label>
-                                    <div>
-                                        <input type="text" value="{{ $role->name }}" required
-                                            class="form-control form-control-icon has-validation" id="role"
-                                            name="role" placeholder="Enter title">
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6 mb-3">
-                                    <label for="description" class="form-label">Role Description<span style="color: red">
-                                            *</span></label>
-                                    <div>
-                                        <input type="text" value="{{ $role->description }}"
-                                            class="form-control form-control-icon" id="description" name="description"
-                                            placeholder="Enter Description">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3 form-group">
-                                    <label for="choices-multiple-remove-button" class="form-label">
-                                        Select Permissions for Role<span style="color: red"> *</span>
+                                <div class="col-md-6 mb-3">
+                                    <label for="name" class="form-label">Course Name
+                                        <span style="color: red"> *</span>
                                     </label>
-                                    <select required class="js-example-basic-multiple" name="permissions[]"
-                                        multiple="multiple">
-                                        @foreach ($permissions as $permission)
-                                            <option @if ($role->hasPermissionTo($permission->name)) selected @endif>
-                                                {{ $permission->name }}</option>
+                                    <input required type="text" class="form-control" name="name"
+                                        value="{{ $course->name }}" placeholder="Course Name">
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="teacher" class="form-label">Teacher
+                                        <span style="color: red"> *</span>
+                                    </label>
+                                    <select class="form-select" name="teacher" required>
+                                        <option value="">Select Teacher</option>
+                                        @foreach ($teachers as $teacher)
+                                            <option value="{{ $teacher->id }}"
+                                                @if ($teacher->id == $course->teacher_id) selected @endif>{{ $teacher->username }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
+                                <div class="col-md-6 mb-3 form-group">
+                                    <label for="startDate" class="form-label">
+                                        Start Date<span style="color: red"> *</span>
+                                    </label>
+                                    <input type="date" required class="form-control" name="startDate"
+                                        value="{{ $course->start_date }}" placeholder="Select Start Date">
+
+                                </div>
+                                <div class="col-md-6 mb-3 form-group">
+                                    <label for="endDate" class="form-label">
+                                        End Date<span style="color: red"> *</span>
+                                    </label>
+                                    <input type="date" required class="form-control" name="endDate"
+                                        value="{{ $course->end_date }}" placeholder="Select Start Date">
+
+                                </div>
                                 <div class="col-md-12 form-group mb-2">
-                                    <a style="margin-right:3px;" href="{{ route('viewroles') }}"
-                                        class="btn btn-danger btn-sm">Cancel</a>
+                                    <a style="margin-right:3px;" href="" class="btn btn-danger btn-sm">Cancel</a>
                                     <input type="submit" class="btn btn-success btn-sm">
                                 </div>
                             </div>

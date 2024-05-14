@@ -1,26 +1,25 @@
-@extends('layouts.master')
-@section('title')
+<?php $__env->startSection('title'); ?>
     Course
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('css')
+<?php $__env->startSection('css'); ?>
     <!-- Select2 css-->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <!-- Breadcrumb Trail -->
-    @component('components.breadcrumb')
-        @slot('li_1')
+    <?php $__env->startComponent('components.breadcrumb'); ?>
+        <?php $__env->slot('li_1'); ?>
             Course
-        @endslot
-        @slot('title')
+        <?php $__env->endSlot(); ?>
+        <?php $__env->slot('title'); ?>
             Add
-        @endslot
-    @endcomponent
+        <?php $__env->endSlot(); ?>
+    <?php echo $__env->renderComponent(); ?>
 
     <!-- Session Messages -->
-    @include('partials.session')
+    <?php echo $__env->make('partials.session', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
     <!-- Add employee Form -->
     <div class="row">
@@ -31,9 +30,9 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <form method="POST" action="{{ route('storecourse') }}">
-                            @csrf
-                            @method('POST')
+                        <form method="POST" action="<?php echo e(route('storecourse')); ?>">
+                            <?php echo csrf_field(); ?>
+                            <?php echo method_field('POST'); ?>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="name" class="form-label">Course Name
@@ -49,9 +48,9 @@
                                     </label>
                                     <select class="form-select" name="teacher" required>
                                         <option value="">Select Teacher</option>
-                                        @foreach ($teachers as $teacher)
-                                            <option value="{{ $teacher->id }}">{{ $teacher->username }}</option>
-                                        @endforeach
+                                        <?php $__currentLoopData = $teachers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $teacher): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($teacher->id); ?>"><?php echo e($teacher->username); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3 form-group">
@@ -81,19 +80,21 @@
             </div>
         </div>
     </div>
-@endsection
-@section('script')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <!-- Select2 cdn -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="{{ URL::asset('assets/js/pages/select2.init.js') }}"></script>
+    <script src="<?php echo e(URL::asset('assets/js/pages/select2.init.js')); ?>"></script>
     <!-- Input Mask -->
-    <script src="{{ URL::asset('assets/libs/cleave.js/cleave.js.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/pages/form-masks.init.js') }}"></script>
+    <script src="<?php echo e(URL::asset('assets/libs/cleave.js/cleave.js.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('assets/js/pages/form-masks.init.js')); ?>"></script>
     <!-- App JS -->
-    <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+    <script src="<?php echo e(URL::asset('/assets/js/app.min.js')); ?>"></script>
 
-    <script src="{{ URL::asset('assets/libs/prismjs/prismjs.min.js') }}"></script>
-@endsection
+    <script src="<?php echo e(URL::asset('assets/libs/prismjs/prismjs.min.js')); ?>"></script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH Z:\ZappFinity\LMS\learnify\resources\views/menu/course_management/add.blade.php ENDPATH**/ ?>

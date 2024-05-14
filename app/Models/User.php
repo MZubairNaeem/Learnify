@@ -29,7 +29,28 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function role () {
+    public function role () 
+    {
         return $this->belongsTo(Role::class);
+    }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'course_students', 'student_id', 'course_id');
+    }
+
+    public function coursesAsTeacher()
+    {
+        return $this->hasMany(Course::class, 'teacher_id');
+    }
+
+    public function coursesAsCreator()
+    {
+        return $this->hasMany(Course::class, 'created_by');
+    }
+
+    public function coursesAsStudent()
+    {
+        return $this->belongsToMany(Course::class, 'course_students', 'student_id', 'course_id');
     }
 }

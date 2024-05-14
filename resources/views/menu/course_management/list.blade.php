@@ -21,108 +21,193 @@
         @endslot
     @endcomponent
     @include('partials.session')
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="d-flex justify-content-between">
-                        <h5 class="card-title mb-0">Courses</h5>
-                        <a type="button" class="btn btn-sm btn-primary">Add New</a>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <table id="alternative-pagination"
-                        class="table nowrap dt-responsive align-middle table-hover table-bordered" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>SR No.</th>
-                                <th>Course</th>
-                                <th>Code</th>
-                                <th>Teacher</th>
-                                <th>Created by</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        @foreach ($courses as $key => $course)
-                            <tbody>
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $course->name }}</td>
-                                    <td>{{ $course->code }}</td>
-                                    <td>{{ $course->code }}</td>
-                                    <td>{{ $course->code }}</td>
-                                    <td style="white-space: normal !important;">
-                                        @can('Edit Role')
-                                            <a 
-                                            {{-- href="{{ route('editrole',  encrypt($course->id)) }}" --}}
-                                                class="btn btn-sm btn-success">Edit</a>
-                                        @endcan
-                                        @if ($course->name != 'Student')
-                                            @can('Delete Role')
-                                                <a 
-                                                {{-- data-bs-toggle="modal" data-bs-target="#deleteModal{{ $key }}" --}}
-                                                    class="btn btn-sm btn-danger">Delete</a>
-                                            @endcan
-                                        @endif
-                                    </td>
-                                </tr>
-                                {{-- <div class="modal fade bs-example-modal-sm" id="permissionModel{{ $key }}"
-                                    role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-sm">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h3 class="modal-title" id="mySmallModalLabel">Permissions</h3>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close">
-                                                </button>
-                                            </div>
-                                            <div class="px-4 py-2">
-                                                @foreach ($permissions as $permission)
-                                                    @if ($role->permissions->contains($permission->id))
-                                                        <h6 class=" text-left">{{ $permission->name }}</h6>
-                                                    @endif
-                                                @endforeach
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="javascript:void(0);" class="btn btn-link link-success fw-medium"
-                                                    data-bs-dismiss="modal"><i class="ri-close-line me-1 align-middle"></i>
-                                                    Close</a>
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal --> --}}
-                                <!-- Delete Confirmation Modal -->
-                                {{-- <div class="modal fade" id="deleteModal{{ $key }}" tabindex="-1"
-                                    aria-labelledby="deleteModalLabel{{ $key }}" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteModalLabel{{ $key }}">Confirm
-                                                    Delete</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>Are you sure you want to delete this role?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Cancel</button>
-                                                <form action="{{ route('deleterole', encrypt($role->id)) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </form>
+    <div class="row mb-2">
+        <div class="col-12">
+            <div class="text-end">
+                <a href="{{ route('addcourse') }}" class="btn btn-primary waves-effect waves-light">
+                    <i class="ri-add-line align-middle me-2"></i> Add Course
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            @foreach ($courses as $course)
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="card">
+                        <div class="card-header ">
+                            <div class="d-flex justify-content-between">
+                                <div class="col">
+                                    <h3 class="card-title text-primary text-bold">{{ $course->name }}</h3>
+                                </div>
+                                <div>
+                                    <a class="btn btn-sm btn-info" href="{{ route('showcourse',$course->id) }}">
+                                        <i class="ri-eye-line"></i>
+                                    </a>
+                                    <a type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal{{ $course->id }}">
+                                        <i class="ri-delete-bin-line"></i>
+                                    </a>
+                                    <div class="modal fade
+                                        "
+                                        id="deleteModal{{ $course->id }}" tabindex="-1"
+                                        aria-labelledby="deleteModalLabel{{ $course->id }}">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteModalLabel{{ $course->id }}">Delete
+                                                        Course</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div
+                                                    class="modal-body
+                                                    ">
+                                                    <p>Are you sure you want to delete this course?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <form method="POST" action="{{ route('deletecourse', $course->id) }}">
+                                                        @csrf
+                                                        @method('POST')
+                                                        <input type="hidden" name="course" value="{{ $course->id }}">
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div> --}}
-                            </tbody>
-                        @endforeach
-                    </table>
+                                    <a type="button" href="{{ route('editcourse', $course->id) }}"
+                                        class="btn btn-sm btn-primary">
+                                        <i class="ri-pencil-line"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col d-flex justify-content-between mt-2">
+                                <p class="card-text text-secondary fs-16">{{ $course->teacher->username }}</p>
+                                <p class="card-text">{{ $course->code }}</p>
+                            </div>
+                        </div>
+                        <div class="card-body ">
+                            <div class="col d-flex justify-content-between">
+                                <p class="card-text text-dark">Created By</p>
+                                <p class="card-text">{{ $course->creator->username }}</p>
+                            </div>
+                            <div class="col d-flex justify-content-between">
+                                <p class="card-text text-dark">Start Date</p>
+                                <p class="card-text">{{ $course->start_date }}</p>
+                                <p class="card-text text-dark">End Date</p>
+                                <p class="card-text">{{ $course->end_date }}</p>
+                            </div>
+                            <div class="row justify-content-between">
+                                <div class="col-auto">
+                                    <p class="card-text text-dark">Total Students</p>
+                                </div>
+                                <div class="col-auto d-flex">
+                                    <p class="card-text mx-3">
+                                        {{ $course->students->count() }}
+                                    </p>
+                                    <a type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#addStudentModal{{ $course->id }}">
+                                        <i class="ri-user-add-line"></i>
+                                    </a>
+                                    <div class="modal fade" id="addStudentModal{{ $course->id }}" tabindex="-1"
+                                        aria-labelledby="exampleModalgridLabel">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="addStudentModalLabel">Add Student to Course
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div
+                                                    class="modal-body
+                                                    ">
+                                                    <form method="POST" action="{{ route('addstudenttocourse') }}">
+                                                        @csrf
+                                                        @method('POST')
+                                                        <div class="row">
+                                                            <div class="col-md-6 mb-3">
+                                                                <label for="student" class="form-label">Student
+                                                                    <span style="color: red"> *</span>
+                                                                </label>
+                                                                <select class="form-select" name="student" required>
+                                                                    <option value="">Select Student</option>
+                                                                    @foreach ($students as $student)
+                                                                        <option value="{{ $student->id }}">
+                                                                            {{ $student->username }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <input type="hidden" name="course"
+                                                                value="{{ $course->id }}">
+                                                            <div class="col-md-12 form-group mb-2">
+                                                                <a style="margin-right:3px;" href=""
+                                                                    class="btn btn-danger btn-sm">Cancel</a>
+                                                                <input type="submit" class="btn btn-success btn-sm">
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                data-bs-target="#attendanceModal{{ $course->id }}">
+                                Create Attendance
+                            </a>
+                            <div class="modal fade
+                                "
+                                id="attendanceModal{{ $course->id }}" tabindex="-1"
+                                aria-labelledby="attendanceModalLabel{{ $course->id }}">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="attendanceModalLabel{{ $course->id }}">Create
+                                                Attendance</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body
+                                            ">
+                                            <form method="POST" action="{{ route('storeeattendance') }}">
+                                                @csrf
+                                                @method('POST')
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="date" class="form-label">Date
+                                                            <span style="color: red"> *</span>
+                                                        </label>
+                                                        <input type="date" class="form-control" name="date"
+                                                            placeholder="Select Date">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="date" class="form-label">Time
+                                                            <span style="color: red"> *</span>
+                                                        </label>
+                                                        <input type="time" class="form-control" name="date"
+                                                            placeholder="Select Date">
+                                                    </div>
+                                                    <input type="hidden" name="course" value="{{ $course->id }}">
+                                                    <div class="col-md-12 form-group mb-2">
+                                                        <a style="margin-right:3px;" href=""
+                                                            class="btn btn-danger btn-sm">Cancel</a>
+                                                        <input type="submit" class="btn btn-success btn-sm">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            @endforeach
         </div>
     </div>
 @endsection
