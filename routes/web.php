@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\Discussion\DiscussionController;
 use App\Http\Controllers\UserManagement\RoleController;
 use App\Http\Controllers\UserManagement\UserController;
 use App\Http\Controllers\CourseManagement\CourseController;
 use App\Http\Controllers\Attendance\AttendanceController;
+use App\Http\Controllers\Assignment\AssignmentController;
+use App\Http\Controllers\Material\MaterialController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -49,6 +52,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/update/{id}', 'update')->name('updatecourse');
             Route::post('/delete/{id}', 'destroy')->name('deletecourse');
             Route::post('/addstudenttocourse', 'addStudentToCourse')->name('addstudenttocourse');
+            Route::post('/removestudentfromcourse', 'removeStudentFromCourse')->name('removestudentfromcourse');
         });
     });
 
@@ -60,7 +64,44 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/store', 'store')->name('storeeattendance');
             Route::get('/edit/{id}', 'edit')->name('editattendance');
             Route::post('/update/{id}', 'update')->name('updateattendance');
-            Route::delete('/delete/{id}', 'destroy')->name('deleteattendance');
+            Route::get('/delete/{id}', 'destroy')->name('deleteattendance');
+        });
+    });
+
+    //assignment routes
+    Route::controller(AssignmentController::class)->group(function () {
+        Route::prefix('assignments')->group(function () {
+            Route::get('/list', 'index')->name('viewassignments');
+            Route::get('/create', 'create')->name('addassignment');
+            Route::post('/store', 'store')->name('storeassignment');
+            Route::get('/edit/{id}', 'edit')->name('editassignment');
+            Route::post('/update/{id}', 'update')->name('updateassignment');
+            Route::get('/delete/{id}', 'destroy')->name('deleteassignment');
+            Route::get('/download/{id}', 'download')->name('downloadassignment');
+        });
+    });
+
+    //material routes
+    Route::controller(MaterialController::class)->group(function () {
+        Route::prefix('materials')->group(function () {
+            Route::get('/list', 'index')->name('viewmaterials');
+            Route::get('/create', 'create')->name('addmaterial');
+            Route::post('/store', 'store')->name('storematerial');
+            Route::get('/edit/{id}', 'edit')->name('editmaterial');
+            Route::post('/update/{id}', 'update')->name('updatematerial');
+            Route::get('/delete/{id}', 'destroy')->name('deletematerial');
+        });
+    });
+
+    //discussion routes
+    Route::controller(DiscussionController::class)->group(function () {
+        Route::prefix('discussions')->group(function () {
+            Route::get('/list', 'index')->name('viewdiscussions');
+            Route::get('/create', 'create')->name('adddiscussion');
+            Route::post('/store', 'store')->name('storediscussion');
+            Route::get('/edit/{id}', 'edit')->name('editdiscussion');
+            Route::post('/update/{id}', 'update')->name('updatediscussion');
+            Route::get('/delete/{id}', 'destroy')->name('deletediscussion');
         });
     });
 

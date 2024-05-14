@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Attendance extends Model
+class Assignment extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'title',
+        'file',
+        'due_date',
         'course_id',
         'created_by',
-        'date',
-        'time',
     ];
 
     public function course()
@@ -24,11 +25,5 @@ class Attendance extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'created_by');
-    }
-
-    //student attendance
-    public function studentAttendance()
-    {
-        return $this->hasMany(StudentAttendance::class, 'attendance_id');
     }
 }

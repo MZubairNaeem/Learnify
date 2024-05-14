@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\CourseManagement;
 
 use App\Http\Controllers\Controller;
+use App\Models\Assignment;
+use App\Models\Attendance;
 use App\Models\Course;
 use App\Models\CourseStudent;
+use App\Models\Discussion;
+use App\Models\Material;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -15,8 +19,6 @@ class CourseController extends Controller
     public function index()
     {
         $courses = Course::all();
-
-
         $students = User::whereHas('roles', function ($q) {
             $q->where('name', 'Student');
         })->get();
@@ -63,7 +65,14 @@ class CourseController extends Controller
         $students = User::whereHas('roles', function ($q) {
             $q->where('name', 'Student');
         })->get();
-        return view('menu.course_management.show', compact('course', 'students'));
+
+        $assignments = Assignment::where('course_id', $id)->get();
+        $materials = Material::where('course_id', $id)->get();
+        $studentsInCourse = CourseStudent::where('course_id', $id)->get();
+        $attendances = Attendance::where('course_id', $id)->get();
+
+        $discussions = Discussion::with('user', 'course')->where('course_id', $id)->get();
+        return view('menu.course_management.show', compact('course', 'students', 'assignments', 'materials', 'studentsInCourse', 'attendances', 'discussions'));
     }
 
     public function edit($id)
@@ -128,5 +137,22 @@ class CourseController extends Controller
 
 
         return redirect()->back()->with('success', 'Student added to course successfully');
+    }
+
+    public function removeStudentFromCourse(Request $request)
+    {
+        $validator = \Validator::make($request->all(), [
+            'course' => 'required',
+            'student' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $courseStudent = CourseStudent::where('course_id', $request->course)->where('student_id', $request->student)->first();
+        $courseStudent->delete();
+
+        return redirect()->back()->with('success', 'Student removed from course successfully');
     }
 }

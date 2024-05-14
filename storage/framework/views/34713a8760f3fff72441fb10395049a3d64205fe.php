@@ -32,54 +32,7 @@
                                 </h3>
                             </div>
                             <div>
-                                <a type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#attendanceModal<?php echo e($course->id); ?>">
-                                    Create Attendance
-                                </a>
-                                <div class="modal fade
-                                "
-                                    id="attendanceModal<?php echo e($course->id); ?>" tabindex="-1"
-                                    aria-labelledby="attendanceModalLabel<?php echo e($course->id); ?>">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="attendanceModalLabel<?php echo e($course->id); ?>">Create
-                                                    Attendance</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body
-                                            ">
-                                                <form method="POST" action="<?php echo e(route('storeeattendance')); ?>">
-                                                    <?php echo csrf_field(); ?>
-                                                    <?php echo method_field('POST'); ?>
-                                                    <div class="row">
-                                                        <div class="col-md-6 mb-3">
-                                                            <label for="date" class="form-label">Date
-                                                                <span style="color: red"> *</span>
-                                                            </label>
-                                                            <input type="date" class="form-control" name="date"
-                                                                placeholder="Select Date">
-                                                        </div>
-                                                        <div class="col-md-6 mb-3">
-                                                            <label for="date" class="form-label">Time
-                                                                <span style="color: red"> *</span>
-                                                            </label>
-                                                            <input type="time" class="form-control" name="date"
-                                                                placeholder="Select Date">
-                                                        </div>
-                                                        <input type="hidden" name="course" value="<?php echo e($course->id); ?>">
-                                                        <div class="col-md-12 form-group mb-2">
-                                                            <a style="margin-right:3px;" href=""
-                                                                class="btn btn-danger btn-sm">Cancel</a>
-                                                            <input type="submit" class="btn btn-success btn-sm">
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
 
                                 <a type="button" class="btn btn-sm btn-danger" title="Delete" data-bs-toggle="modal"
                                     data-bs-target="#deleteModal<?php echo e($course->id); ?>">
@@ -156,14 +109,121 @@
                                 <div class="row g-4">
                                     <div class="col-sm-auto">
                                         <div>
-                                            <a href="apps-ecommerce-add-product" class="btn btn-sm btn-primary"
-                                                id="addproduct-btn"><i class="ri-add-line align-bottom me-1"></i> Add
-                                                Assignment</a>
-                                            <a href="apps-ecommerce-add-product" class="btn btn-sm btn-success"
-                                                id="addproduct-btn"><i class="ri-upload-2-line align-bottom me-1"></i>
-                                                Upload
-                                                Material</a>
-                                            <a type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal"
+                                            <a class="btn btn-sm
+                                            btn-primary"
+                                                data-bs-toggle="modal" data-bs-target="#addproductModal">
+                                                <i class="ri-add-line align-bottom me-1"></i> Add Assignment
+                                            </a>
+                                            <div class="modal fade" id="addproductModal" tabindex="-1"
+                                                aria-labelledby="addproductModalLabel">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="addproductModalLabel">Add
+                                                                Assignment
+                                                            </h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                        </div>
+                                                        <div
+                                                            class="modal-body
+                                                    ">
+                                                            <form method="POST" action="<?php echo e(route('storeassignment')); ?>"
+                                                                enctype="multipart/form-data">
+                                                                <?php echo csrf_field(); ?>
+                                                                <?php echo method_field('POST'); ?>
+                                                                <div class="row">
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <label for="title" class="form-label">Title
+                                                                            <span style="color: red"> *</span>
+                                                                        </label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="title" placeholder="Enter Title">
+                                                                    </div>
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <label for="due_date" class="form-label">Due Date
+                                                                            <span style="color: red"> *</span>
+                                                                        </label>
+                                                                        <input type="date" class="form-control"
+                                                                            name="due_date" placeholder="Select Date">
+                                                                    </div>
+                                                                    <div class="col-md-12 mb-3">
+                                                                        <label for="file" class="form-label">File
+                                                                            <span style="color: red"> *</span>
+                                                                        </label>
+                                                                        <input type="file" class="form-control"
+                                                                            name="file" placeholder="Select File">
+                                                                    </div>
+                                                                    <input type="hidden" name="course"
+                                                                        value="<?php echo e($course->id); ?>">
+                                                                    <div class="col-md-12 form-group mb-2">
+                                                                        <a style="margin-right:3px;" href=""
+                                                                            class="btn btn-danger btn-sm">Cancel</a>
+                                                                        <input type="submit"
+                                                                            class="btn btn-success btn-sm">
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a class="btn btn-sm
+                                            btn-secondary"
+                                                data-bs-toggle="modal" data-bs-target="#addMaterialModal">
+                                                <i class="ri-add-line align-bottom me-1"></i> Add Material
+                                            </a>
+
+                                            <div class="modal fade
+                                            "
+                                                id="addMaterialModal" tabindex="-1"
+                                                aria-labelledby="addMaterialModalLabel">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="addMaterialModalLabel">Add
+                                                                Material
+                                                            </h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div
+                                                            class="modal-body
+                                                    ">
+                                                            <form method="POST" action="<?php echo e(route('storematerial')); ?>"
+                                                                enctype="multipart/form-data">
+                                                                <?php echo csrf_field(); ?>
+                                                                <?php echo method_field('POST'); ?>
+                                                                <div class="row">
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <label for="title" class="form-label">Title
+                                                                            <span style="color: red"> *</span>
+                                                                        </label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="title" placeholder="Enter Title">
+                                                                    </div>
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <label for="file" class="form-label">File
+                                                                            <span style="color: red"> *</span>
+                                                                        </label>
+                                                                        <input type="file" class="form-control"
+                                                                            name="file" placeholder="Select File">
+                                                                    </div>
+                                                                    <input type="hidden" name="course"
+                                                                        value="<?php echo e($course->id); ?>">
+                                                                    <div class="col-md-12 form-group mb-2">
+                                                                        <a style="margin-right:3px;" href=""
+                                                                            class="btn btn-danger btn-sm">Cancel</a>
+                                                                        <input type="submit"
+                                                                            class="btn btn-success btn-sm">
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
                                                 data-bs-target="#addStudentModal<?php echo e($course->id); ?>">
                                                 <i class="ri-user-2-line align-bottom me-1"></i> Add Student
                                             </a>
@@ -213,16 +273,59 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <a type="button" class="btn btn-sm btn-info" data-bs-toggle="modal"
+                                                data-bs-target="#attendanceModal<?php echo e($course->id); ?>">
+                                                Create Attendance
+                                            </a>
+                                            <div class="modal fade" id="attendanceModal<?php echo e($course->id); ?>"
+                                                tabindex="-1" aria-labelledby="attendanceModalLabel<?php echo e($course->id); ?>">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title"
+                                                                id="attendanceModalLabel<?php echo e($course->id); ?>">Create
+                                                                Attendance</h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form method="POST"
+                                                                action="<?php echo e(route('storeeattendance')); ?>">
+                                                                <?php echo csrf_field(); ?>
+                                                                <?php echo method_field('POST'); ?>
+                                                                <div class="row">
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <label for="date" class="form-label">Date
+                                                                            <span style="color: red"> *</span>
+                                                                        </label>
+                                                                        <input type="date" class="form-control"
+                                                                            name="date" placeholder="Select Date">
+                                                                    </div>
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <label for="date" class="form-label">Time
+                                                                            <span style="color: red"> *</span>
+                                                                        </label>
+                                                                        <input type="time" class="form-control"
+                                                                            name="date" placeholder="Select Date">
+                                                                    </div>
+                                                                    <input type="hidden" name="course"
+                                                                        value="<?php echo e($course->id); ?>">
+                                                                    <div class="col-md-12 form-group mb-2">
+                                                                        <a style="margin-right:3px;" href=""
+                                                                            class="btn btn-danger btn-sm">Cancel</a>
+                                                                        <input type="submit"
+                                                                            class="btn btn-success btn-sm">
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-sm">
-                                        <div class="d-flex justify-content-sm-end">
-                                            <div class="search-box ms-2">
-                                                <input type="text" class="form-control" id="searchProductList"
-                                                    placeholder="Search...">
-                                                <i class="ri-search-line search-icon"></i>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -241,7 +344,14 @@
                                             <li class="nav-item">
                                                 <a class="nav-link fw-semibold" data-bs-toggle="tab"
                                                     href="#productnav-published" role="tab">
-                                                    Uploads <span
+                                                    Assignments <span
+                                                        class="badge badge-soft-danger align-middle rounded-pill ms-1"></span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link fw-semibold" data-bs-toggle="tab"
+                                                    href="#productnav-mat" role="tab">
+                                                    Materials <span
                                                         class="badge badge-soft-danger align-middle rounded-pill ms-1"></span>
                                                 </a>
                                             </li>
@@ -277,25 +387,434 @@
                                 <div class="tab-content text-muted">
                                     <div class="tab-pane active" id="productnav-all" role="tabpanel">
                                         <div id="table-product-list-all" class="table-card gridjs-border-none">
-
+                                            <form class="m-5" action="<?php echo e(route('storediscussion')); ?>" method="POST">
+                                                <?php echo csrf_field(); ?>
+                                                <?php echo method_field('POST'); ?>
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <input type="text" class="form-control" name="msg"
+                                                            placeholder="Type your message">
+                                                    </div>
+                                                    <input type="hidden" name="course" value="<?php echo e($course->id); ?>">
+                                                    <div class="col-md-2">
+                                                        <button type="submit" class="btn btn-primary">Send</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <?php $__currentLoopData = $discussions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $discussion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <div class="mx-5">
+                                                    <div class="d-flex align-items-center">
+                                                        <div>
+                                                            <h5 class="card-title">Sent By:
+                                                                <?php echo e($discussion->user->username); ?></h5>
+                                                        </div>
+                                                        <div class="ms-auto">
+                                                            <a type="button" class="btn btn-sm btn-danger"
+                                                                title="Delete" data-bs-toggle="modal"
+                                                                data-bs-target="#deleteDiscussionModal<?php echo e($discussion->id); ?>">
+                                                                <i class="ri-delete-bin-line"></i>
+                                                            </a>
+                                                            <!-- Modal -->
+                                                            <div class="modal fade
+                                                            "
+                                                                id="deleteDiscussionModal<?php echo e($discussion->id); ?>"
+                                                                tabindex="-1"
+                                                                aria-labelledby="deleteDiscussionModalLabel<?php echo e($discussion->id); ?>">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title"
+                                                                                id="deleteDiscussionModalLabel<?php echo e($discussion->id); ?>">
+                                                                                Delete Discussion
+                                                                            </h5>
+                                                                            <button type="button" class="btn-close"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div
+                                                                            class="modal-body
+                                                                            ">
+                                                                            <p>Are you sure you want to delete this
+                                                                                discussion?</p>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Close</button>
+                                                                            <a type="submit"
+                                                                                href="<?php echo e(route('deletediscussion', $discussion->id)); ?>"
+                                                                                class="btn btn-danger">Delete</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <p class="card-text"><?php echo e($discussion->msg); ?></p>
+                                                </div>
+                                                <hr class="mx-5">
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </div>
                                     </div>
                                     <!-- end tab pane -->
 
                                     <div class="tab-pane" id="productnav-published" role="tabpanel">
                                         <div id="table-product-list-published" class="table-card gridjs-border-none">
+                                            <?php $__currentLoopData = $assignments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $assignment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <h5
+                                                                    class="card-title
+                                                                ">
+                                                                    <?php echo e($assignment->title); ?></h5>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <a type="button" class="btn btn-sm btn-danger"
+                                                                    title="Delete" data-bs-toggle="modal"
+                                                                    data-bs-target="#deleteAssignmentModal<?php echo e($assignment->id); ?>">
+                                                                    <i class="ri-delete-bin-line"></i>
+                                                                </a>
+                                                                <div class="modal fade
+                                                                    "
+                                                                    id="deleteAssignmentModal<?php echo e($assignment->id); ?>"
+                                                                    tabindex="-1"
+                                                                    aria-labelledby="deleteAssignmentModalLabel<?php echo e($assignment->id); ?>">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title"
+                                                                                    id="deleteAssignmentModalLabel<?php echo e($assignment->id); ?>">
+                                                                                    Delete Assignment
+                                                                                </h5>
+                                                                                <button type="button" class="btn-close"
+                                                                                    data-bs-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div
+                                                                                class="modal-body
+                                                                                ">
+                                                                                <p>Are you sure you want to delete this
+                                                                                    assignment?</p>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal">Close</button>
+                                                                                <a type="submit"
+                                                                                    href="<?php echo e(route('deleteassignment', $assignment->id)); ?>"
+                                                                                    class="btn btn-danger">Delete</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <p class="card-text">Due Date: <?php echo e($assignment->due_date); ?>
 
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <a href="<?php echo e(route('downloadassignment', $assignment->id)); ?>"
+                                                                    class="btn btn-sm btn-primary">Download</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </div>
+                                    </div>
+                                    <!-- end tab pane -->
+                                    <div class="tab-pane" id="productnav-mat" role="tabpanel">
+                                        <div id="table-product-list-published" class="table-card gridjs-border-none">
+                                            <?php $__currentLoopData = $materials; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $material): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <h5
+                                                                    class="card-title
+                                                                ">
+                                                                    <?php echo e($material->title); ?></h5>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <a type="button" class="btn btn-sm btn-danger"
+                                                                    title="Delete" data-bs-toggle="modal"
+                                                                    data-bs-target="#deletematerialModal<?php echo e($material->id); ?>">
+                                                                    <i class="ri-delete-bin-line"></i>
+                                                                </a>
+                                                                <div class="modal fade
+                                                                    "
+                                                                    id="deletematerialModal<?php echo e($material->id); ?>"
+                                                                    tabindex="-1"
+                                                                    aria-labelledby="deletematerialModalLabel<?php echo e($material->id); ?>">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title"
+                                                                                    id="deletematerialModalLabel<?php echo e($material->id); ?>">
+                                                                                    Delete material
+                                                                                </h5>
+                                                                                <button type="button" class="btn-close"
+                                                                                    data-bs-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div
+                                                                                class="modal-body
+                                                                                ">
+                                                                                <p>Are you sure you want to delete this
+                                                                                    material?</p>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal">Close</button>
+                                                                                <a type="submit"
+                                                                                    href="<?php echo e(route('deletematerial', $material->id)); ?>"
+                                                                                    class="btn btn-danger">Delete</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <p class="card-text">Upload Date:
+                                                                    <?php echo e($assignment->created_at); ?>
+
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <a href="<?php echo e(route('downloadassignment', $assignment->id)); ?>"
+                                                                    class="btn btn-sm btn-primary">Download</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </div>
                                     </div>
                                     <!-- end tab pane -->
 
                                     <div class="tab-pane" id="productnav-draft" role="tabpanel">
                                         <div class="py-4 text-center">
+                                            <table id="datatable"
+                                                class="table table-bordered dt-responsive  nowrap w-100">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Student Name</th>
+                                                        <th>Email</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php $__currentLoopData = $course->students; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <tr>
+                                                            <td><?php echo e($student->username); ?></td>
+                                                            <td><?php echo e($student->email); ?></td>
+                                                            <td>
+                                                                <a type="button" class="btn btn-sm btn-danger"
+                                                                    title="Delete" data-bs-toggle="modal"
+                                                                    data-bs-target="#deleteStudentModal<?php echo e($student->id); ?>">
+                                                                    <i class="ri-delete-bin-line"></i>
+                                                                </a>
+                                                                <a class="btn btn-sm btn-primary" title="Edit"
+                                                                    href="<?php echo e(route('edituser', encrypt($student->id))); ?>">
+                                                                    <i class="ri-pencil-line"></i>
+                                                                </a>
+                                                                <div class="modal fade
+                                                                    "
+                                                                    id="deleteStudentModal<?php echo e($student->id); ?>"
+                                                                    tabindex="-1"
+                                                                    aria-labelledby="deleteStudentModalLabel<?php echo e($student->id); ?>">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title"
+                                                                                    id="deleteStudentModalLabel<?php echo e($student->id); ?>">
+                                                                                    Delete Student
+                                                                                </h5>
+                                                                                <button type="button" class="btn-close"
+                                                                                    data-bs-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div
+                                                                                class="modal-body
+                                                                                ">
+                                                                                <p>Are you sure you want to delete this
+                                                                                    student?</p>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal">Close</button>
+                                                                                <form
+                                                                                    action="<?php echo e(route('removestudentfromcourse')); ?>"
+                                                                                    method="POST">
+                                                                                    <?php echo csrf_field(); ?>
+                                                                                    <?php echo method_field('POST'); ?>
+                                                                                    <input type="hidden" name="student"
+                                                                                        value="<?php echo e($student->id); ?>">
+                                                                                    <input type="hidden" name="course"
+                                                                                        value="<?php echo e($course->id); ?>">
+                                                                                    <button type="submit"
+                                                                                        class="btn btn-danger">Delete</button>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </tbody>
+                                            </table>
+
                                         </div>
                                     </div>
                                     <!-- end tab pane -->
                                     <div class="tab-pane" id="productnav-att" role="tabpanel">
                                         <div class="py-4 text-center">
+                                            <table id="datatable"
+                                                class="table table-bordered dt-responsive  nowrap w-100">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Time</th>
+                                                        <th>Present</th>
+                                                        <th>Absent</th>
+                                                        <th>Status</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php $__currentLoopData = $attendances; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $attendance): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <tr>
+                                                            <td><?php echo e($attendance->date); ?></td>
+                                                            <td><?php echo e($attendance->time); ?></td>
+                                                            <?php
+                                                                $present = 0;
+                                                                $absent = 0;
+                                                                //get total present and absent students
+                                                                foreach ($attendance->studentAttendance as $att) {
+                                                                    if ($att->status == 'present') {
+                                                                        $present++;
+                                                                    } else {
+                                                                        $absent++;
+                                                                    }
+                                                                }
+                                                            ?>
+                                                            <td><?php echo e($present); ?></td>
+                                                            <td><?php echo e($absent); ?></td>
+                                                            <td>
+                                                                <a type="button" data-bs-toggle="modal"
+                                                                    data-bs-target="#info<?php echo e($attendance->id); ?>">
+                                                                    <i class="ri-information-line text-success"></i>
+                                                                </a>
+                                                                <div class="modal fade
+                                                                    "
+                                                                    id="info<?php echo e($attendance->id); ?>" tabindex="-1"
+                                                                    aria-labelledby="infoLabel<?php echo e($attendance->id); ?>">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title"
+                                                                                    id="infoLabel<?php echo e($attendance->id); ?>">
+                                                                                    Attendance Date:
+                                                                                    <?php echo e($attendance->date); ?>
+
+                                                                                </h5>
+                                                                                <button type="button" class="btn-close"
+                                                                                    data-bs-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div
+                                                                                class="modal-body
+                                                                                ">
+                                                                                <table class="table table-bordered">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th>Student Name</th>
+                                                                                            <th>Status</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <?php $__currentLoopData = $attendance->studentAttendance; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $att): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                            <tr>
+                                                                                                <?php
+                                                                                                    $student = App\Models\User::find($att->student_id);
+                                                                                                ?>
+                                                                                                <td><?php echo e($student->username); ?>
+
+                                                                                                </td>
+                                                                                                <td><?php echo e($att->status); ?></td>
+                                                                                            </tr>
+                                                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal">Close</button>
+                                                                                <a href="<?php echo e(route('deleteattendance', $attendance->id)); ?>"
+                                                                                    class="btn btn-danger">Delete</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <a type="button" class="btn btn-sm btn-danger"
+                                                                    title="Delete" data-bs-toggle="modal"
+                                                                    data-bs-target="#deleteAttendanceModal<?php echo e($attendance->id); ?>">
+                                                                    <i class="ri-delete-bin-line"></i>
+                                                                </a>
+                                                                <div class="modal fade
+                                                                    "
+                                                                    id="deleteAttendanceModal<?php echo e($attendance->id); ?>"
+                                                                    tabindex="-1"
+                                                                    aria-labelledby="deleteAttendanceModalLabel<?php echo e($attendance->id); ?>">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title"
+                                                                                    id="deleteAttendanceModalLabel<?php echo e($attendance->id); ?>">
+                                                                                    Delete Attendance
+                                                                                </h5>
+                                                                                <button type="button" class="btn-close"
+                                                                                    data-bs-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div
+                                                                                class="modal-body
+                                                                                ">
+                                                                                <p>Are you sure you want to delete this
+                                                                                    attendance?</p>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal">Close</button>
+                                                                                <a href="<?php echo e(route('deleteattendance', $attendance->id)); ?>"
+                                                                                    class="btn btn-danger">Delete</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                     <!-- end tab pane -->

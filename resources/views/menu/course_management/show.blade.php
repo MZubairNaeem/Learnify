@@ -32,54 +32,7 @@
                                 </h3>
                             </div>
                             <div>
-                                <a type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#attendanceModal{{ $course->id }}">
-                                    Create Attendance
-                                </a>
-                                <div class="modal fade
-                                "
-                                    id="attendanceModal{{ $course->id }}" tabindex="-1"
-                                    aria-labelledby="attendanceModalLabel{{ $course->id }}">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="attendanceModalLabel{{ $course->id }}">Create
-                                                    Attendance</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body
-                                            ">
-                                                <form method="POST" action="{{ route('storeeattendance') }}">
-                                                    @csrf
-                                                    @method('POST')
-                                                    <div class="row">
-                                                        <div class="col-md-6 mb-3">
-                                                            <label for="date" class="form-label">Date
-                                                                <span style="color: red"> *</span>
-                                                            </label>
-                                                            <input type="date" class="form-control" name="date"
-                                                                placeholder="Select Date">
-                                                        </div>
-                                                        <div class="col-md-6 mb-3">
-                                                            <label for="date" class="form-label">Time
-                                                                <span style="color: red"> *</span>
-                                                            </label>
-                                                            <input type="time" class="form-control" name="date"
-                                                                placeholder="Select Date">
-                                                        </div>
-                                                        <input type="hidden" name="course" value="{{ $course->id }}">
-                                                        <div class="col-md-12 form-group mb-2">
-                                                            <a style="margin-right:3px;" href=""
-                                                                class="btn btn-danger btn-sm">Cancel</a>
-                                                            <input type="submit" class="btn btn-success btn-sm">
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
 
                                 <a type="button" class="btn btn-sm btn-danger" title="Delete" data-bs-toggle="modal"
                                     data-bs-target="#deleteModal{{ $course->id }}">
@@ -154,14 +107,121 @@
                                 <div class="row g-4">
                                     <div class="col-sm-auto">
                                         <div>
-                                            <a href="apps-ecommerce-add-product" class="btn btn-sm btn-primary"
-                                                id="addproduct-btn"><i class="ri-add-line align-bottom me-1"></i> Add
-                                                Assignment</a>
-                                            <a href="apps-ecommerce-add-product" class="btn btn-sm btn-success"
-                                                id="addproduct-btn"><i class="ri-upload-2-line align-bottom me-1"></i>
-                                                Upload
-                                                Material</a>
-                                            <a type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal"
+                                            <a class="btn btn-sm
+                                            btn-primary"
+                                                data-bs-toggle="modal" data-bs-target="#addproductModal">
+                                                <i class="ri-add-line align-bottom me-1"></i> Add Assignment
+                                            </a>
+                                            <div class="modal fade" id="addproductModal" tabindex="-1"
+                                                aria-labelledby="addproductModalLabel">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="addproductModalLabel">Add
+                                                                Assignment
+                                                            </h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                        </div>
+                                                        <div
+                                                            class="modal-body
+                                                    ">
+                                                            <form method="POST" action="{{ route('storeassignment') }}"
+                                                                enctype="multipart/form-data">
+                                                                @csrf
+                                                                @method('POST')
+                                                                <div class="row">
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <label for="title" class="form-label">Title
+                                                                            <span style="color: red"> *</span>
+                                                                        </label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="title" placeholder="Enter Title">
+                                                                    </div>
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <label for="due_date" class="form-label">Due Date
+                                                                            <span style="color: red"> *</span>
+                                                                        </label>
+                                                                        <input type="date" class="form-control"
+                                                                            name="due_date" placeholder="Select Date">
+                                                                    </div>
+                                                                    <div class="col-md-12 mb-3">
+                                                                        <label for="file" class="form-label">File
+                                                                            <span style="color: red"> *</span>
+                                                                        </label>
+                                                                        <input type="file" class="form-control"
+                                                                            name="file" placeholder="Select File">
+                                                                    </div>
+                                                                    <input type="hidden" name="course"
+                                                                        value="{{ $course->id }}">
+                                                                    <div class="col-md-12 form-group mb-2">
+                                                                        <a style="margin-right:3px;" href=""
+                                                                            class="btn btn-danger btn-sm">Cancel</a>
+                                                                        <input type="submit"
+                                                                            class="btn btn-success btn-sm">
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a class="btn btn-sm
+                                            btn-secondary"
+                                                data-bs-toggle="modal" data-bs-target="#addMaterialModal">
+                                                <i class="ri-add-line align-bottom me-1"></i> Add Material
+                                            </a>
+
+                                            <div class="modal fade
+                                            "
+                                                id="addMaterialModal" tabindex="-1"
+                                                aria-labelledby="addMaterialModalLabel">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="addMaterialModalLabel">Add
+                                                                Material
+                                                            </h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div
+                                                            class="modal-body
+                                                    ">
+                                                            <form method="POST" action="{{ route('storematerial') }}"
+                                                                enctype="multipart/form-data">
+                                                                @csrf
+                                                                @method('POST')
+                                                                <div class="row">
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <label for="title" class="form-label">Title
+                                                                            <span style="color: red"> *</span>
+                                                                        </label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="title" placeholder="Enter Title">
+                                                                    </div>
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <label for="file" class="form-label">File
+                                                                            <span style="color: red"> *</span>
+                                                                        </label>
+                                                                        <input type="file" class="form-control"
+                                                                            name="file" placeholder="Select File">
+                                                                    </div>
+                                                                    <input type="hidden" name="course"
+                                                                        value="{{ $course->id }}">
+                                                                    <div class="col-md-12 form-group mb-2">
+                                                                        <a style="margin-right:3px;" href=""
+                                                                            class="btn btn-danger btn-sm">Cancel</a>
+                                                                        <input type="submit"
+                                                                            class="btn btn-success btn-sm">
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
                                                 data-bs-target="#addStudentModal{{ $course->id }}">
                                                 <i class="ri-user-2-line align-bottom me-1"></i> Add Student
                                             </a>
@@ -211,16 +271,65 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <a type="button" class="btn btn-sm btn-info" data-bs-toggle="modal"
+                                                data-bs-target="#attendanceModal{{ $course->id }}">
+                                                Create Attendance
+                                            </a>
+                                            <div class="modal fade" id="attendanceModal{{ $course->id }}"
+                                                tabindex="-1" aria-labelledby="attendanceModalLabel{{ $course->id }}">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title"
+                                                                id="attendanceModalLabel{{ $course->id }}">Create
+                                                                Attendance</h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form method="POST"
+                                                                action="{{ route('storeeattendance') }}">
+                                                                @csrf
+                                                                @method('POST')
+                                                                <div class="row">
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <label for="date" class="form-label">Date
+                                                                            <span style="color: red"> *</span>
+                                                                        </label>
+                                                                        <input type="date" class="form-control"
+                                                                            name="date" placeholder="Select Date">
+                                                                    </div>
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <label for="date" class="form-label">Time
+                                                                            <span style="color: red"> *</span>
+                                                                        </label>
+                                                                        <input type="time" class="form-control"
+                                                                            name="date" placeholder="Select Date">
+                                                                    </div>
+                                                                    <input type="hidden" name="course"
+                                                                        value="{{ $course->id }}">
+                                                                    <div class="col-md-12 form-group mb-2">
+                                                                        <a style="margin-right:3px;" href=""
+                                                                            class="btn btn-danger btn-sm">Cancel</a>
+                                                                        <input type="submit"
+                                                                            class="btn btn-success btn-sm">
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-sm">
-                                        <div class="d-flex justify-content-sm-end">
+                                        {{-- <div class="d-flex justify-content-sm-end">
                                             <div class="search-box ms-2">
                                                 <input type="text" class="form-control" id="searchProductList"
                                                     placeholder="Search...">
                                                 <i class="ri-search-line search-icon"></i>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -239,7 +348,14 @@
                                             <li class="nav-item">
                                                 <a class="nav-link fw-semibold" data-bs-toggle="tab"
                                                     href="#productnav-published" role="tab">
-                                                    Uploads <span
+                                                    Assignments <span
+                                                        class="badge badge-soft-danger align-middle rounded-pill ms-1"></span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link fw-semibold" data-bs-toggle="tab"
+                                                    href="#productnav-mat" role="tab">
+                                                    Materials <span
                                                         class="badge badge-soft-danger align-middle rounded-pill ms-1"></span>
                                                 </a>
                                             </li>
@@ -275,25 +391,430 @@
                                 <div class="tab-content text-muted">
                                     <div class="tab-pane active" id="productnav-all" role="tabpanel">
                                         <div id="table-product-list-all" class="table-card gridjs-border-none">
-
+                                            <form class="m-5" action="{{ route('storediscussion') }}" method="POST">
+                                                @csrf
+                                                @method('POST')
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <input type="text" class="form-control" name="msg"
+                                                            placeholder="Type your message">
+                                                    </div>
+                                                    <input type="hidden" name="course" value="{{ $course->id }}">
+                                                    <div class="col-md-2">
+                                                        <button type="submit" class="btn btn-primary">Send</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            @foreach ($discussions as $discussion)
+                                                <div class="mx-5">
+                                                    <div class="d-flex align-items-center">
+                                                        <div>
+                                                            <h5 class="card-title">Sent By:
+                                                                {{ $discussion->user->username }}</h5>
+                                                        </div>
+                                                        <div class="ms-auto">
+                                                            <a type="button" class="btn btn-sm btn-danger"
+                                                                title="Delete" data-bs-toggle="modal"
+                                                                data-bs-target="#deleteDiscussionModal{{ $discussion->id }}">
+                                                                <i class="ri-delete-bin-line"></i>
+                                                            </a>
+                                                            <!-- Modal -->
+                                                            <div class="modal fade
+                                                            "
+                                                                id="deleteDiscussionModal{{ $discussion->id }}"
+                                                                tabindex="-1"
+                                                                aria-labelledby="deleteDiscussionModalLabel{{ $discussion->id }}">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title"
+                                                                                id="deleteDiscussionModalLabel{{ $discussion->id }}">
+                                                                                Delete Discussion
+                                                                            </h5>
+                                                                            <button type="button" class="btn-close"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div
+                                                                            class="modal-body
+                                                                            ">
+                                                                            <p>Are you sure you want to delete this
+                                                                                discussion?</p>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Close</button>
+                                                                            <a type="submit"
+                                                                                href="{{ route('deletediscussion', $discussion->id) }}"
+                                                                                class="btn btn-danger">Delete</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <p class="card-text">{{ $discussion->msg }}</p>
+                                                </div>
+                                                <hr class="mx-5">
+                                            @endforeach
                                         </div>
                                     </div>
                                     <!-- end tab pane -->
 
                                     <div class="tab-pane" id="productnav-published" role="tabpanel">
                                         <div id="table-product-list-published" class="table-card gridjs-border-none">
-
+                                            @foreach ($assignments as $assignment)
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <h5
+                                                                    class="card-title
+                                                                ">
+                                                                    {{ $assignment->title }}</h5>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <a type="button" class="btn btn-sm btn-danger"
+                                                                    title="Delete" data-bs-toggle="modal"
+                                                                    data-bs-target="#deleteAssignmentModal{{ $assignment->id }}">
+                                                                    <i class="ri-delete-bin-line"></i>
+                                                                </a>
+                                                                <div class="modal fade
+                                                                    "
+                                                                    id="deleteAssignmentModal{{ $assignment->id }}"
+                                                                    tabindex="-1"
+                                                                    aria-labelledby="deleteAssignmentModalLabel{{ $assignment->id }}">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title"
+                                                                                    id="deleteAssignmentModalLabel{{ $assignment->id }}">
+                                                                                    Delete Assignment
+                                                                                </h5>
+                                                                                <button type="button" class="btn-close"
+                                                                                    data-bs-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div
+                                                                                class="modal-body
+                                                                                ">
+                                                                                <p>Are you sure you want to delete this
+                                                                                    assignment?</p>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal">Close</button>
+                                                                                <a type="submit"
+                                                                                    href="{{ route('deleteassignment', $assignment->id) }}"
+                                                                                    class="btn btn-danger">Delete</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <p class="card-text">Due Date: {{ $assignment->due_date }}
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <a href="{{ route('downloadassignment', $assignment->id) }}"
+                                                                    class="btn btn-sm btn-primary">Download</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <!-- end tab pane -->
+                                    <div class="tab-pane" id="productnav-mat" role="tabpanel">
+                                        <div id="table-product-list-published" class="table-card gridjs-border-none">
+                                            @foreach ($materials as $material)
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <h5
+                                                                    class="card-title
+                                                                ">
+                                                                    {{ $material->title }}</h5>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <a type="button" class="btn btn-sm btn-danger"
+                                                                    title="Delete" data-bs-toggle="modal"
+                                                                    data-bs-target="#deletematerialModal{{ $material->id }}">
+                                                                    <i class="ri-delete-bin-line"></i>
+                                                                </a>
+                                                                <div class="modal fade
+                                                                    "
+                                                                    id="deletematerialModal{{ $material->id }}"
+                                                                    tabindex="-1"
+                                                                    aria-labelledby="deletematerialModalLabel{{ $material->id }}">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title"
+                                                                                    id="deletematerialModalLabel{{ $material->id }}">
+                                                                                    Delete material
+                                                                                </h5>
+                                                                                <button type="button" class="btn-close"
+                                                                                    data-bs-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div
+                                                                                class="modal-body
+                                                                                ">
+                                                                                <p>Are you sure you want to delete this
+                                                                                    material?</p>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal">Close</button>
+                                                                                <a type="submit"
+                                                                                    href="{{ route('deletematerial', $material->id) }}"
+                                                                                    class="btn btn-danger">Delete</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <p class="card-text">Upload Date:
+                                                                    {{ $assignment->created_at }}
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <a href="{{ route('downloadassignment', $assignment->id) }}"
+                                                                    class="btn btn-sm btn-primary">Download</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                     <!-- end tab pane -->
 
                                     <div class="tab-pane" id="productnav-draft" role="tabpanel">
                                         <div class="py-4 text-center">
+                                            <table id="datatable"
+                                                class="table table-bordered dt-responsive  nowrap w-100">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Student Name</th>
+                                                        <th>Email</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($course->students as $student)
+                                                        <tr>
+                                                            <td>{{ $student->username }}</td>
+                                                            <td>{{ $student->email }}</td>
+                                                            <td>
+                                                                <a type="button" class="btn btn-sm btn-danger"
+                                                                    title="Delete" data-bs-toggle="modal"
+                                                                    data-bs-target="#deleteStudentModal{{ $student->id }}">
+                                                                    <i class="ri-delete-bin-line"></i>
+                                                                </a>
+                                                                <a class="btn btn-sm btn-primary" title="Edit"
+                                                                    href="{{ route('edituser', encrypt($student->id)) }}">
+                                                                    <i class="ri-pencil-line"></i>
+                                                                </a>
+                                                                <div class="modal fade
+                                                                    "
+                                                                    id="deleteStudentModal{{ $student->id }}"
+                                                                    tabindex="-1"
+                                                                    aria-labelledby="deleteStudentModalLabel{{ $student->id }}">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title"
+                                                                                    id="deleteStudentModalLabel{{ $student->id }}">
+                                                                                    Delete Student
+                                                                                </h5>
+                                                                                <button type="button" class="btn-close"
+                                                                                    data-bs-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div
+                                                                                class="modal-body
+                                                                                ">
+                                                                                <p>Are you sure you want to delete this
+                                                                                    student?</p>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal">Close</button>
+                                                                                <form
+                                                                                    action="{{ route('removestudentfromcourse') }}"
+                                                                                    method="POST">
+                                                                                    @csrf
+                                                                                    @method('POST')
+                                                                                    <input type="hidden" name="student"
+                                                                                        value="{{ $student->id }}">
+                                                                                    <input type="hidden" name="course"
+                                                                                        value="{{ $course->id }}">
+                                                                                    <button type="submit"
+                                                                                        class="btn btn-danger">Delete</button>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+
                                         </div>
                                     </div>
                                     <!-- end tab pane -->
                                     <div class="tab-pane" id="productnav-att" role="tabpanel">
                                         <div class="py-4 text-center">
+                                            <table id="datatable"
+                                                class="table table-bordered dt-responsive  nowrap w-100">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Time</th>
+                                                        <th>Present</th>
+                                                        <th>Absent</th>
+                                                        <th>Status</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($attendances as $attendance)
+                                                        <tr>
+                                                            <td>{{ $attendance->date }}</td>
+                                                            <td>{{ $attendance->time }}</td>
+                                                            @php
+                                                                $present = 0;
+                                                                $absent = 0;
+                                                                //get total present and absent students
+                                                                foreach ($attendance->studentAttendance as $att) {
+                                                                    if ($att->status == 'present') {
+                                                                        $present++;
+                                                                    } else {
+                                                                        $absent++;
+                                                                    }
+                                                                }
+                                                            @endphp
+                                                            <td>{{ $present }}</td>
+                                                            <td>{{ $absent }}</td>
+                                                            <td>
+                                                                <a type="button" data-bs-toggle="modal"
+                                                                    data-bs-target="#info{{ $attendance->id }}">
+                                                                    <i class="ri-information-line text-success"></i>
+                                                                </a>
+                                                                <div class="modal fade
+                                                                    "
+                                                                    id="info{{ $attendance->id }}" tabindex="-1"
+                                                                    aria-labelledby="infoLabel{{ $attendance->id }}">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title"
+                                                                                    id="infoLabel{{ $attendance->id }}">
+                                                                                    Attendance Date:
+                                                                                    {{ $attendance->date }}
+                                                                                </h5>
+                                                                                <button type="button" class="btn-close"
+                                                                                    data-bs-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div
+                                                                                class="modal-body
+                                                                                ">
+                                                                                <table class="table table-bordered">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th>Student Name</th>
+                                                                                            <th>Status</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        @foreach ($attendance->studentAttendance as $att)
+                                                                                            <tr>
+                                                                                                @php
+                                                                                                    $student = App\Models\User::find($att->student_id);
+                                                                                                @endphp
+                                                                                                <td>{{ $student->username }}
+                                                                                                </td>
+                                                                                                <td>{{ $att->status }}</td>
+                                                                                            </tr>
+                                                                                        @endforeach
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal">Close</button>
+                                                                                <a href="{{ route('deleteattendance', $attendance->id) }}"
+                                                                                    class="btn btn-danger">Delete</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <a type="button" class="btn btn-sm btn-danger"
+                                                                    title="Delete" data-bs-toggle="modal"
+                                                                    data-bs-target="#deleteAttendanceModal{{ $attendance->id }}">
+                                                                    <i class="ri-delete-bin-line"></i>
+                                                                </a>
+                                                                <div class="modal fade
+                                                                    "
+                                                                    id="deleteAttendanceModal{{ $attendance->id }}"
+                                                                    tabindex="-1"
+                                                                    aria-labelledby="deleteAttendanceModalLabel{{ $attendance->id }}">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title"
+                                                                                    id="deleteAttendanceModalLabel{{ $attendance->id }}">
+                                                                                    Delete Attendance
+                                                                                </h5>
+                                                                                <button type="button" class="btn-close"
+                                                                                    data-bs-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div
+                                                                                class="modal-body
+                                                                                ">
+                                                                                <p>Are you sure you want to delete this
+                                                                                    attendance?</p>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal">Close</button>
+                                                                                <a href="{{ route('deleteattendance', $attendance->id) }}"
+                                                                                    class="btn btn-danger">Delete</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                     <!-- end tab pane -->

@@ -46,6 +46,8 @@ class AttendanceController extends Controller
     
     public function destroy($id)
     {
-        //
+        $attendance = Attendance::find($id);
+        $attendance->delete();
+        return redirect()->back()->with('success', 'Attendance deleted successfully');
     }
 }
