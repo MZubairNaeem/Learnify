@@ -65,12 +65,12 @@
                                     </td>
                                     <td style="white-space: normal !important;">
                                         @if ($role->name != 'Super Admin')
-                                            @can('Edit Role')
+                                            @can('Role')
                                                 <a href="{{ route('editrole',  encrypt($role->id)) }}"
                                                     class="btn btn-sm btn-success">Edit</a>
                                             @endcan
                                             @if ($role->name != 'Teacher' && $role->name != 'Student')
-                                                @can('Delete Role')
+                                                @can('Role')
                                                     <a data-bs-toggle="modal" data-bs-target="#deleteModal{{ $key }}"
                                                         class="btn btn-sm btn-danger">Delete</a>
                                                 @endcan

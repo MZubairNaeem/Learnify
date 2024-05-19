@@ -32,12 +32,12 @@
                                 </h3>
                             </div>
                             <div>
-
-
-                                <a type="button" class="btn btn-sm btn-danger" title="Delete" data-bs-toggle="modal"
-                                    data-bs-target="#deleteModal{{ $course->id }}">
-                                    <i class="ri-delete-bin-line"></i>
-                                </a>
+                                @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                    <a type="button" class="btn btn-sm btn-danger" title="Delete" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal{{ $course->id }}">
+                                        <i class="ri-delete-bin-line"></i>
+                                    </a>
+                                @endif
                                 <div class="modal fade
                                     "
                                     id="deleteModal{{ $course->id }}" tabindex="-1"
@@ -67,11 +67,12 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <a type="button" title="Edit" href="{{ route('editcourse', $course->id) }}"
-                                    class="btn btn-sm btn-primary">
-                                    <i class="ri-pencil-line"></i>
-                                </a>
+                                @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                    <a type="button" title="Edit" href="{{ route('editcourse', $course->id) }}"
+                                        class="btn btn-sm btn-primary">
+                                        <i class="ri-pencil-line"></i>
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -107,11 +108,13 @@
                                 <div class="row g-4">
                                     <div class="col-sm-auto">
                                         <div>
-                                            <a class="btn btn-sm
+                                            @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                                <a class="btn btn-sm
                                             btn-primary"
-                                                data-bs-toggle="modal" data-bs-target="#addproductModal">
-                                                <i class="ri-add-line align-bottom me-1"></i> Add Assignment
-                                            </a>
+                                                    data-bs-toggle="modal" data-bs-target="#addproductModal">
+                                                    <i class="ri-add-line align-bottom me-1"></i> Add Assignment
+                                                </a>
+                                            @endif
                                             <div class="modal fade" id="addproductModal" tabindex="-1"
                                                 aria-labelledby="addproductModalLabel">
                                                 <div class="modal-dialog">
@@ -166,11 +169,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <a class="btn btn-sm
+                                            @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                                <a class="btn btn-sm
                                             btn-secondary"
-                                                data-bs-toggle="modal" data-bs-target="#addMaterialModal">
-                                                <i class="ri-add-line align-bottom me-1"></i> Add Material
-                                            </a>
+                                                    data-bs-toggle="modal" data-bs-target="#addMaterialModal">
+                                                    <i class="ri-add-line align-bottom me-1"></i> Add Material
+                                                </a>
+                                            @endif
 
                                             <div class="modal fade
                                             "
@@ -221,10 +226,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <a type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
-                                                data-bs-target="#addStudentModal{{ $course->id }}">
-                                                <i class="ri-user-2-line align-bottom me-1"></i> Add Student
-                                            </a>
+                                            @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                                <a type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                                    data-bs-target="#addStudentModal{{ $course->id }}">
+                                                    <i class="ri-user-2-line align-bottom me-1"></i> Add Student
+                                                </a>
+                                            @endif
                                             <div class="modal fade" id="addStudentModal{{ $course->id }}"
                                                 tabindex="-1" aria-labelledby="exampleModalgridLabel">
                                                 <div class="modal-dialog">
@@ -271,10 +278,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <a type="button" class="btn btn-sm btn-info" data-bs-toggle="modal"
-                                                data-bs-target="#attendanceModal{{ $course->id }}">
-                                                Create Attendance
-                                            </a>
+                                            @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                                <a type="button" class="btn btn-sm btn-info" data-bs-toggle="modal"
+                                                    data-bs-target="#attendanceModal{{ $course->id }}">
+                                                    Create Attendance
+                                                </a>
+                                            @endif
                                             <div class="modal fade" id="attendanceModal{{ $course->id }}"
                                                 tabindex="-1" aria-labelledby="attendanceModalLabel{{ $course->id }}">
                                                 <div class="modal-dialog">
@@ -413,11 +422,19 @@
                                                                 {{ $discussion->user->username }}</h5>
                                                         </div>
                                                         <div class="ms-auto">
-                                                            <a type="button" class="btn btn-sm btn-danger"
-                                                                title="Delete" data-bs-toggle="modal"
-                                                                data-bs-target="#deleteDiscussionModal{{ $discussion->id }}">
-                                                                <i class="ri-delete-bin-line"></i>
-                                                            </a>
+                                                            @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                                                <a type="button" class="btn btn-sm btn-danger"
+                                                                    title="Delete" data-bs-toggle="modal"
+                                                                    data-bs-target="#deleteDiscussionModal{{ $discussion->id }}">
+                                                                    <i class="ri-delete-bin-line"></i>
+                                                                </a>
+                                                            @elseif(Auth::user()->id == $discussion->user->id)
+                                                                <a type="button" class="btn btn-sm btn-danger"
+                                                                    title="Delete" data-bs-toggle="modal"
+                                                                    data-bs-target="#deleteDiscussionModal{{ $discussion->id }}">
+                                                                    <i class="ri-delete-bin-line"></i>
+                                                                </a>
+                                                            @endif
                                                             <!-- Modal -->
                                                             <div class="modal fade
                                                             "
@@ -475,11 +492,13 @@
                                                                     {{ $assignment->title }}</h5>
                                                             </div>
                                                             <div class="col-auto">
-                                                                <a type="button" class="btn btn-sm btn-danger"
-                                                                    title="Delete" data-bs-toggle="modal"
-                                                                    data-bs-target="#deleteAssignmentModal{{ $assignment->id }}">
-                                                                    <i class="ri-delete-bin-line"></i>
-                                                                </a>
+                                                                @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                                                    <a type="button" class="btn btn-sm btn-danger"
+                                                                        title="Delete" data-bs-toggle="modal"
+                                                                        data-bs-target="#deleteAssignmentModal{{ $assignment->id }}">
+                                                                        <i class="ri-delete-bin-line"></i>
+                                                                    </a>
+                                                                @endif
                                                                 <div class="modal fade
                                                                     "
                                                                     id="deleteAssignmentModal{{ $assignment->id }}"
@@ -525,8 +544,123 @@
                                                             <div class="col-auto">
                                                                 <a href="{{ route('downloadassignment', $assignment->id) }}"
                                                                     class="btn btn-sm btn-primary">Download</a>
+                                                                @if (Auth::user()->hasRole('Student'))
+                                                                    <a class="btn btn-sm btn-success" title="Upload"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#uploadAssignment">
+
+                                                                        Upload
+                                                                        Assignment
+                                                                    </a>
+                                                                    <div class="modal fade" id="uploadAssignment"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="uploadAssignmentLabel">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="uploadAssignmentLabel">Upload
+                                                                                        Assignment
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <form method="POST"
+                                                                                        action="{{ route('uploadassignment') }}"
+                                                                                        enctype="multipart/form-data">
+                                                                                        @csrf
+                                                                                        @method('POST')
+                                                                                        <div class="row">
+
+                                                                                            <div class="col-md-12 mb-3">
+                                                                                                <label for="file"
+                                                                                                    class="form-label">File
+                                                                                                    <span
+                                                                                                        style="color: red">
+                                                                                                        *</span>
+                                                                                                </label>
+                                                                                                <input type="file"
+                                                                                                    class="form-control"
+                                                                                                    name="file"
+                                                                                                    placeholder="Select File">
+                                                                                            </div>
+                                                                                            <input type="hidden"
+                                                                                                name="assignment_id"
+                                                                                                value="{{ $assignment->id }}">
+                                                                                            <div
+                                                                                                class="col-md-12 form-group mb-2">
+                                                                                                <a style="margin-right:3px;"
+                                                                                                    href=""
+                                                                                                    class="btn btn-danger btn-sm">Cancel</a>
+                                                                                                <input type="submit"
+                                                                                                    class="btn btn-success btn-sm">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                @endif
                                                             </div>
+
+
                                                         </div>
+                                                        @if (Auth::user()->hasRole('Student'))
+                                                            @php
+                                                                $studentAssignment = App\Models\StudentAssignment::where(
+                                                                    'assignment_id',
+                                                                    $assignment->id,
+                                                                )
+                                                                    ->where('student_id', Auth::user()->id)
+                                                                    ->first();
+                                                            @endphp
+                                                            @if ($studentAssignment)
+                                                            <h5>Uploaded Assignments</h5>
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <p class="card-text">Upload Date:
+                                                                            {{ $studentAssignment->created_at }}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <a href="{{ route('downloadstudentassignment', $studentAssignment->id) }}"
+                                                                            class="btn btn-sm btn-primary">Download</a>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        @else
+                                                            @php
+                                                                $studentAssignments = App\Models\StudentAssignment::where(
+                                                                    'assignment_id',
+                                                                    $assignment->id,
+                                                                )->get();
+                                                            @endphp
+                                                            @foreach ($studentAssignments as $studentAssignment)
+                                                            <h5>Student Assignments</h5>
+                                                            @php
+                                                                $student = App\Models\User::find($studentAssignment->student_id);
+
+                                                            @endphp
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <p class="card-text">Upload Date:
+                                                                            {{ $studentAssignment->created_at }}
+                                                                        </p>
+                                                                        <p class="card-text">Student Name:
+                                                                            {{ $student->username }}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <a href="{{ route('downloadstudentassignment', $studentAssignment->id) }}"
+                                                                            class="btn btn-sm btn-primary">Download</a>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                        @endif
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -546,11 +680,13 @@
                                                                     {{ $material->title }}</h5>
                                                             </div>
                                                             <div class="col-auto">
-                                                                <a type="button" class="btn btn-sm btn-danger"
-                                                                    title="Delete" data-bs-toggle="modal"
-                                                                    data-bs-target="#deletematerialModal{{ $material->id }}">
-                                                                    <i class="ri-delete-bin-line"></i>
-                                                                </a>
+                                                                @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                                                    <a type="button" class="btn btn-sm btn-danger"
+                                                                        title="Delete" data-bs-toggle="modal"
+                                                                        data-bs-target="#deletematerialModal{{ $material->id }}">
+                                                                        <i class="ri-delete-bin-line"></i>
+                                                                    </a>
+                                                                @endif
                                                                 <div class="modal fade
                                                                     "
                                                                     id="deletematerialModal{{ $material->id }}"
@@ -614,7 +750,9 @@
                                                     <tr>
                                                         <th>Student Name</th>
                                                         <th>Email</th>
-                                                        <th>Actions</th>
+                                                        @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                                            <th>Actions</th>
+                                                        @endif
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -623,15 +761,19 @@
                                                             <td>{{ $student->username }}</td>
                                                             <td>{{ $student->email }}</td>
                                                             <td>
-                                                                <a type="button" class="btn btn-sm btn-danger"
-                                                                    title="Delete" data-bs-toggle="modal"
-                                                                    data-bs-target="#deleteStudentModal{{ $student->id }}">
-                                                                    <i class="ri-delete-bin-line"></i>
-                                                                </a>
-                                                                <a class="btn btn-sm btn-primary" title="Edit"
-                                                                    href="{{ route('edituser', encrypt($student->id)) }}">
-                                                                    <i class="ri-pencil-line"></i>
-                                                                </a>
+                                                                @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                                                    <a type="button" class="btn btn-sm btn-danger"
+                                                                        title="Delete" data-bs-toggle="modal"
+                                                                        data-bs-target="#deleteStudentModal{{ $student->id }}">
+                                                                        <i class="ri-delete-bin-line"></i>
+                                                                    </a>
+                                                                @endif
+                                                                @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                                                    <a class="btn btn-sm btn-primary" title="Edit"
+                                                                        href="{{ route('edituser', encrypt($student->id)) }}">
+                                                                        <i class="ri-pencil-line"></i>
+                                                                    </a>
+                                                                @endif
                                                                 <div class="modal fade
                                                                     "
                                                                     id="deleteStudentModal{{ $student->id }}"
@@ -717,67 +859,105 @@
                                                             <td>{{ $present }}</td>
                                                             <td>{{ $absent }}</td>
                                                             <td>
-                                                                <a type="button" data-bs-toggle="modal"
-                                                                    data-bs-target="#info{{ $attendance->id }}">
-                                                                    <i class="ri-information-line text-success"></i>
-                                                                </a>
-                                                                <div class="modal fade
+                                                                @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                                                    <a type="button" data-bs-toggle="modal"
+                                                                        data-bs-target="#info{{ $attendance->id }}">
+                                                                        <i class="ri-information-line text-success"></i>
+                                                                    </a>
+                                                                    <div class="modal fade
                                                                     "
-                                                                    id="info{{ $attendance->id }}" tabindex="-1"
-                                                                    aria-labelledby="infoLabel{{ $attendance->id }}">
-                                                                    <div class="modal-dialog">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title"
-                                                                                    id="infoLabel{{ $attendance->id }}">
-                                                                                    Attendance Date:
-                                                                                    {{ $attendance->date }}
-                                                                                </h5>
-                                                                                <button type="button" class="btn-close"
-                                                                                    data-bs-dismiss="modal"
-                                                                                    aria-label="Close"></button>
-                                                                            </div>
-                                                                            <div
-                                                                                class="modal-body
+                                                                        id="info{{ $attendance->id }}" tabindex="-1"
+                                                                        aria-labelledby="infoLabel{{ $attendance->id }}">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="infoLabel{{ $attendance->id }}">
+                                                                                        Attendance Date:
+                                                                                        {{ $attendance->date }}
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="modal-body
                                                                                 ">
-                                                                                <table class="table table-bordered">
-                                                                                    <thead>
-                                                                                        <tr>
-                                                                                            <th>Student Name</th>
-                                                                                            <th>Status</th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                        @foreach ($attendance->studentAttendance as $att)
+                                                                                    <table class="table table-bordered">
+                                                                                        <thead>
                                                                                             <tr>
-                                                                                                @php
-                                                                                                    $student = App\Models\User::find($att->student_id);
-                                                                                                @endphp
-                                                                                                <td>{{ $student->username }}
-                                                                                                </td>
-                                                                                                <td>{{ $att->status }}</td>
+                                                                                                <th>Student Name</th>
+                                                                                                <th>Status</th>
                                                                                             </tr>
-                                                                                        @endforeach
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </div>
-                                                                            <div class="modal-footer">
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            @foreach ($attendance->studentAttendance as $att)
+                                                                                                <tr>
+                                                                                                    @php
+                                                                                                        $student = App\Models\User::find(
+                                                                                                            $att->student_id,
+                                                                                                        );
+                                                                                                    @endphp
+                                                                                                    <td>{{ $student->username }}
+                                                                                                    </td>
+                                                                                                    <td>{{ $att->status }}
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            @endforeach
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                                {{-- <div class="modal-footer">
                                                                                 <button type="button"
                                                                                     class="btn btn-secondary"
                                                                                     data-bs-dismiss="modal">Close</button>
                                                                                 <a href="{{ route('deleteattendance', $attendance->id) }}"
                                                                                     class="btn btn-danger">Delete</a>
+                                                                            </div> --}}
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                @elseif(Auth::user()->hasRole('Student'))
+                                                                    @php
+                                                                        $status = 'absent';
+
+                                                                        $studentAttendance = App\Models\StudentAttendance::where(
+                                                                            'attendance_id',
+                                                                            $attendance->id,
+                                                                        )
+                                                                            ->where('student_id', Auth::user()->id)
+                                                                            ->first();
+                                                                        if ($studentAttendance) {
+                                                                            $status = $studentAttendance->status;
+                                                                        }
+                                                                    @endphp
+                                                                    @if ($status == 'present')
+                                                                        <span class="badge bg-success">Present</span>
+                                                                    @else
+                                                                        <span class="badge bg-danger">Absent</span>
+                                                                    @endif
+                                                                @endif
                                                             </td>
                                                             <td>
-                                                                <a type="button" class="btn btn-sm btn-danger"
-                                                                    title="Delete" data-bs-toggle="modal"
-                                                                    data-bs-target="#deleteAttendanceModal{{ $attendance->id }}">
-                                                                    <i class="ri-delete-bin-line"></i>
-                                                                </a>
+                                                                @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                                                    <a type="button" class="btn btn-sm btn-danger"
+                                                                        title="Delete" data-bs-toggle="modal"
+                                                                        data-bs-target="#deleteAttendanceModal{{ $attendance->id }}">
+                                                                        <i class="ri-delete-bin-line"></i>
+                                                                    </a>
+                                                                @elseif(Auth::user()->hasRole('Student'))
+                                                                    <a class="btn btn-sm btn-secondary"
+                                                                        href="{{ route('presentstudent', $attendance->id) }}"
+                                                                        title="Present">
+                                                                        <i class=" ri-check-line"></i>
+                                                                    </a>
+                                                                    <a class="btn btn-sm btn-danger"
+                                                                        href="{{ route('absentstudent', $attendance->id) }}"
+                                                                        title="Absent">
+                                                                        <i class="ri-close-line"></i>
+                                                                    </a>
+                                                                @endif
                                                                 <div class="modal fade
                                                                     "
                                                                     id="deleteAttendanceModal{{ $attendance->id }}"

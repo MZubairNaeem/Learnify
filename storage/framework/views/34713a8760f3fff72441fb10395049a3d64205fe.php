@@ -32,12 +32,12 @@
                                 </h3>
                             </div>
                             <div>
-
-
-                                <a type="button" class="btn btn-sm btn-danger" title="Delete" data-bs-toggle="modal"
-                                    data-bs-target="#deleteModal<?php echo e($course->id); ?>">
-                                    <i class="ri-delete-bin-line"></i>
-                                </a>
+                                <?php if(Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher')): ?>
+                                    <a type="button" class="btn btn-sm btn-danger" title="Delete" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal<?php echo e($course->id); ?>">
+                                        <i class="ri-delete-bin-line"></i>
+                                    </a>
+                                <?php endif; ?>
                                 <div class="modal fade
                                     "
                                     id="deleteModal<?php echo e($course->id); ?>" tabindex="-1"
@@ -67,11 +67,12 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <a type="button" title="Edit" href="<?php echo e(route('editcourse', $course->id)); ?>"
-                                    class="btn btn-sm btn-primary">
-                                    <i class="ri-pencil-line"></i>
-                                </a>
+                                <?php if(Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher')): ?>
+                                    <a type="button" title="Edit" href="<?php echo e(route('editcourse', $course->id)); ?>"
+                                        class="btn btn-sm btn-primary">
+                                        <i class="ri-pencil-line"></i>
+                                    </a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -109,11 +110,13 @@
                                 <div class="row g-4">
                                     <div class="col-sm-auto">
                                         <div>
-                                            <a class="btn btn-sm
+                                            <?php if(Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher')): ?>
+                                                <a class="btn btn-sm
                                             btn-primary"
-                                                data-bs-toggle="modal" data-bs-target="#addproductModal">
-                                                <i class="ri-add-line align-bottom me-1"></i> Add Assignment
-                                            </a>
+                                                    data-bs-toggle="modal" data-bs-target="#addproductModal">
+                                                    <i class="ri-add-line align-bottom me-1"></i> Add Assignment
+                                                </a>
+                                            <?php endif; ?>
                                             <div class="modal fade" id="addproductModal" tabindex="-1"
                                                 aria-labelledby="addproductModalLabel">
                                                 <div class="modal-dialog">
@@ -168,11 +171,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <a class="btn btn-sm
+                                            <?php if(Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher')): ?>
+                                                <a class="btn btn-sm
                                             btn-secondary"
-                                                data-bs-toggle="modal" data-bs-target="#addMaterialModal">
-                                                <i class="ri-add-line align-bottom me-1"></i> Add Material
-                                            </a>
+                                                    data-bs-toggle="modal" data-bs-target="#addMaterialModal">
+                                                    <i class="ri-add-line align-bottom me-1"></i> Add Material
+                                                </a>
+                                            <?php endif; ?>
 
                                             <div class="modal fade
                                             "
@@ -223,10 +228,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <a type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
-                                                data-bs-target="#addStudentModal<?php echo e($course->id); ?>">
-                                                <i class="ri-user-2-line align-bottom me-1"></i> Add Student
-                                            </a>
+                                            <?php if(Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher')): ?>
+                                                <a type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                                    data-bs-target="#addStudentModal<?php echo e($course->id); ?>">
+                                                    <i class="ri-user-2-line align-bottom me-1"></i> Add Student
+                                                </a>
+                                            <?php endif; ?>
                                             <div class="modal fade" id="addStudentModal<?php echo e($course->id); ?>"
                                                 tabindex="-1" aria-labelledby="exampleModalgridLabel">
                                                 <div class="modal-dialog">
@@ -273,10 +280,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <a type="button" class="btn btn-sm btn-info" data-bs-toggle="modal"
-                                                data-bs-target="#attendanceModal<?php echo e($course->id); ?>">
-                                                Create Attendance
-                                            </a>
+                                            <?php if(Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher')): ?>
+                                                <a type="button" class="btn btn-sm btn-info" data-bs-toggle="modal"
+                                                    data-bs-target="#attendanceModal<?php echo e($course->id); ?>">
+                                                    Create Attendance
+                                                </a>
+                                            <?php endif; ?>
                                             <div class="modal fade" id="attendanceModal<?php echo e($course->id); ?>"
                                                 tabindex="-1" aria-labelledby="attendanceModalLabel<?php echo e($course->id); ?>">
                                                 <div class="modal-dialog">
@@ -409,11 +418,19 @@
                                                                 <?php echo e($discussion->user->username); ?></h5>
                                                         </div>
                                                         <div class="ms-auto">
-                                                            <a type="button" class="btn btn-sm btn-danger"
-                                                                title="Delete" data-bs-toggle="modal"
-                                                                data-bs-target="#deleteDiscussionModal<?php echo e($discussion->id); ?>">
-                                                                <i class="ri-delete-bin-line"></i>
-                                                            </a>
+                                                            <?php if(Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher')): ?>
+                                                                <a type="button" class="btn btn-sm btn-danger"
+                                                                    title="Delete" data-bs-toggle="modal"
+                                                                    data-bs-target="#deleteDiscussionModal<?php echo e($discussion->id); ?>">
+                                                                    <i class="ri-delete-bin-line"></i>
+                                                                </a>
+                                                            <?php elseif(Auth::user()->id == $discussion->user->id): ?>
+                                                                <a type="button" class="btn btn-sm btn-danger"
+                                                                    title="Delete" data-bs-toggle="modal"
+                                                                    data-bs-target="#deleteDiscussionModal<?php echo e($discussion->id); ?>">
+                                                                    <i class="ri-delete-bin-line"></i>
+                                                                </a>
+                                                            <?php endif; ?>
                                                             <!-- Modal -->
                                                             <div class="modal fade
                                                             "
@@ -471,11 +488,13 @@
                                                                     <?php echo e($assignment->title); ?></h5>
                                                             </div>
                                                             <div class="col-auto">
-                                                                <a type="button" class="btn btn-sm btn-danger"
-                                                                    title="Delete" data-bs-toggle="modal"
-                                                                    data-bs-target="#deleteAssignmentModal<?php echo e($assignment->id); ?>">
-                                                                    <i class="ri-delete-bin-line"></i>
-                                                                </a>
+                                                                <?php if(Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher')): ?>
+                                                                    <a type="button" class="btn btn-sm btn-danger"
+                                                                        title="Delete" data-bs-toggle="modal"
+                                                                        data-bs-target="#deleteAssignmentModal<?php echo e($assignment->id); ?>">
+                                                                        <i class="ri-delete-bin-line"></i>
+                                                                    </a>
+                                                                <?php endif; ?>
                                                                 <div class="modal fade
                                                                     "
                                                                     id="deleteAssignmentModal<?php echo e($assignment->id); ?>"
@@ -522,8 +541,126 @@
                                                             <div class="col-auto">
                                                                 <a href="<?php echo e(route('downloadassignment', $assignment->id)); ?>"
                                                                     class="btn btn-sm btn-primary">Download</a>
+                                                                <?php if(Auth::user()->hasRole('Student')): ?>
+                                                                    <a class="btn btn-sm btn-success" title="Upload"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#uploadAssignment">
+
+                                                                        Upload
+                                                                        Assignment
+                                                                    </a>
+                                                                    <div class="modal fade" id="uploadAssignment"
+                                                                        tabindex="-1"
+                                                                        aria-labelledby="uploadAssignmentLabel">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="uploadAssignmentLabel">Upload
+                                                                                        Assignment
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <form method="POST"
+                                                                                        action="<?php echo e(route('uploadassignment')); ?>"
+                                                                                        enctype="multipart/form-data">
+                                                                                        <?php echo csrf_field(); ?>
+                                                                                        <?php echo method_field('POST'); ?>
+                                                                                        <div class="row">
+
+                                                                                            <div class="col-md-12 mb-3">
+                                                                                                <label for="file"
+                                                                                                    class="form-label">File
+                                                                                                    <span
+                                                                                                        style="color: red">
+                                                                                                        *</span>
+                                                                                                </label>
+                                                                                                <input type="file"
+                                                                                                    class="form-control"
+                                                                                                    name="file"
+                                                                                                    placeholder="Select File">
+                                                                                            </div>
+                                                                                            <input type="hidden"
+                                                                                                name="assignment_id"
+                                                                                                value="<?php echo e($assignment->id); ?>">
+                                                                                            <div
+                                                                                                class="col-md-12 form-group mb-2">
+                                                                                                <a style="margin-right:3px;"
+                                                                                                    href=""
+                                                                                                    class="btn btn-danger btn-sm">Cancel</a>
+                                                                                                <input type="submit"
+                                                                                                    class="btn btn-success btn-sm">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                <?php endif; ?>
                                                             </div>
+
+
                                                         </div>
+                                                        <?php if(Auth::user()->hasRole('Student')): ?>
+                                                            <?php
+                                                                $studentAssignment = App\Models\StudentAssignment::where(
+                                                                    'assignment_id',
+                                                                    $assignment->id,
+                                                                )
+                                                                    ->where('student_id', Auth::user()->id)
+                                                                    ->first();
+                                                            ?>
+                                                            <?php if($studentAssignment): ?>
+                                                            <h5>Uploaded Assignments</h5>
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <p class="card-text">Upload Date:
+                                                                            <?php echo e($studentAssignment->created_at); ?>
+
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <a href="<?php echo e(route('downloadstudentassignment', $studentAssignment->id)); ?>"
+                                                                            class="btn btn-sm btn-primary">Download</a>
+                                                                    </div>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                        <?php else: ?>
+                                                            <?php
+                                                                $studentAssignments = App\Models\StudentAssignment::where(
+                                                                    'assignment_id',
+                                                                    $assignment->id,
+                                                                )->get();
+                                                            ?>
+                                                            <?php $__currentLoopData = $studentAssignments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $studentAssignment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                            <h5>Student Assignments</h5>
+                                                            <?php
+                                                                $student = App\Models\User::find($studentAssignment->student_id);
+
+                                                            ?>
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <p class="card-text">Upload Date:
+                                                                            <?php echo e($studentAssignment->created_at); ?>
+
+                                                                        </p>
+                                                                        <p class="card-text">Student Name:
+                                                                            <?php echo e($student->username); ?>
+
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <a href="<?php echo e(route('downloadstudentassignment', $studentAssignment->id)); ?>"
+                                                                            class="btn btn-sm btn-primary">Download</a>
+                                                                    </div>
+                                                                </div>
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -543,11 +680,13 @@
                                                                     <?php echo e($material->title); ?></h5>
                                                             </div>
                                                             <div class="col-auto">
-                                                                <a type="button" class="btn btn-sm btn-danger"
-                                                                    title="Delete" data-bs-toggle="modal"
-                                                                    data-bs-target="#deletematerialModal<?php echo e($material->id); ?>">
-                                                                    <i class="ri-delete-bin-line"></i>
-                                                                </a>
+                                                                <?php if(Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher')): ?>
+                                                                    <a type="button" class="btn btn-sm btn-danger"
+                                                                        title="Delete" data-bs-toggle="modal"
+                                                                        data-bs-target="#deletematerialModal<?php echo e($material->id); ?>">
+                                                                        <i class="ri-delete-bin-line"></i>
+                                                                    </a>
+                                                                <?php endif; ?>
                                                                 <div class="modal fade
                                                                     "
                                                                     id="deletematerialModal<?php echo e($material->id); ?>"
@@ -612,7 +751,9 @@
                                                     <tr>
                                                         <th>Student Name</th>
                                                         <th>Email</th>
-                                                        <th>Actions</th>
+                                                        <?php if(Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher')): ?>
+                                                            <th>Actions</th>
+                                                        <?php endif; ?>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -621,15 +762,19 @@
                                                             <td><?php echo e($student->username); ?></td>
                                                             <td><?php echo e($student->email); ?></td>
                                                             <td>
-                                                                <a type="button" class="btn btn-sm btn-danger"
-                                                                    title="Delete" data-bs-toggle="modal"
-                                                                    data-bs-target="#deleteStudentModal<?php echo e($student->id); ?>">
-                                                                    <i class="ri-delete-bin-line"></i>
-                                                                </a>
-                                                                <a class="btn btn-sm btn-primary" title="Edit"
-                                                                    href="<?php echo e(route('edituser', encrypt($student->id))); ?>">
-                                                                    <i class="ri-pencil-line"></i>
-                                                                </a>
+                                                                <?php if(Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher')): ?>
+                                                                    <a type="button" class="btn btn-sm btn-danger"
+                                                                        title="Delete" data-bs-toggle="modal"
+                                                                        data-bs-target="#deleteStudentModal<?php echo e($student->id); ?>">
+                                                                        <i class="ri-delete-bin-line"></i>
+                                                                    </a>
+                                                                <?php endif; ?>
+                                                                <?php if(Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher')): ?>
+                                                                    <a class="btn btn-sm btn-primary" title="Edit"
+                                                                        href="<?php echo e(route('edituser', encrypt($student->id))); ?>">
+                                                                        <i class="ri-pencil-line"></i>
+                                                                    </a>
+                                                                <?php endif; ?>
                                                                 <div class="modal fade
                                                                     "
                                                                     id="deleteStudentModal<?php echo e($student->id); ?>"
@@ -715,69 +860,102 @@
                                                             <td><?php echo e($present); ?></td>
                                                             <td><?php echo e($absent); ?></td>
                                                             <td>
-                                                                <a type="button" data-bs-toggle="modal"
-                                                                    data-bs-target="#info<?php echo e($attendance->id); ?>">
-                                                                    <i class="ri-information-line text-success"></i>
-                                                                </a>
-                                                                <div class="modal fade
+                                                                <?php if(Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher')): ?>
+                                                                    <a type="button" data-bs-toggle="modal"
+                                                                        data-bs-target="#info<?php echo e($attendance->id); ?>">
+                                                                        <i class="ri-information-line text-success"></i>
+                                                                    </a>
+                                                                    <div class="modal fade
                                                                     "
-                                                                    id="info<?php echo e($attendance->id); ?>" tabindex="-1"
-                                                                    aria-labelledby="infoLabel<?php echo e($attendance->id); ?>">
-                                                                    <div class="modal-dialog">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title"
-                                                                                    id="infoLabel<?php echo e($attendance->id); ?>">
-                                                                                    Attendance Date:
-                                                                                    <?php echo e($attendance->date); ?>
+                                                                        id="info<?php echo e($attendance->id); ?>" tabindex="-1"
+                                                                        aria-labelledby="infoLabel<?php echo e($attendance->id); ?>">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="infoLabel<?php echo e($attendance->id); ?>">
+                                                                                        Attendance Date:
+                                                                                        <?php echo e($attendance->date); ?>
 
-                                                                                </h5>
-                                                                                <button type="button" class="btn-close"
-                                                                                    data-bs-dismiss="modal"
-                                                                                    aria-label="Close"></button>
-                                                                            </div>
-                                                                            <div
-                                                                                class="modal-body
+                                                                                    </h5>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="modal-body
                                                                                 ">
-                                                                                <table class="table table-bordered">
-                                                                                    <thead>
-                                                                                        <tr>
-                                                                                            <th>Student Name</th>
-                                                                                            <th>Status</th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                        <?php $__currentLoopData = $attendance->studentAttendance; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $att): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                    <table class="table table-bordered">
+                                                                                        <thead>
                                                                                             <tr>
-                                                                                                <?php
-                                                                                                    $student = App\Models\User::find($att->student_id);
-                                                                                                ?>
-                                                                                                <td><?php echo e($student->username); ?>
-
-                                                                                                </td>
-                                                                                                <td><?php echo e($att->status); ?></td>
+                                                                                                <th>Student Name</th>
+                                                                                                <th>Status</th>
                                                                                             </tr>
-                                                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button type="button"
-                                                                                    class="btn btn-secondary"
-                                                                                    data-bs-dismiss="modal">Close</button>
-                                                                                <a href="<?php echo e(route('deleteattendance', $attendance->id)); ?>"
-                                                                                    class="btn btn-danger">Delete</a>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <?php $__currentLoopData = $attendance->studentAttendance; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $att): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                                <tr>
+                                                                                                    <?php
+                                                                                                        $student = App\Models\User::find(
+                                                                                                            $att->student_id,
+                                                                                                        );
+                                                                                                    ?>
+                                                                                                    <td><?php echo e($student->username); ?>
+
+                                                                                                    </td>
+                                                                                                    <td><?php echo e($att->status); ?>
+
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                                
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                <?php elseif(Auth::user()->hasRole('Student')): ?>
+                                                                    <?php
+                                                                        $status = 'absent';
+
+                                                                        $studentAttendance = App\Models\StudentAttendance::where(
+                                                                            'attendance_id',
+                                                                            $attendance->id,
+                                                                        )
+                                                                            ->where('student_id', Auth::user()->id)
+                                                                            ->first();
+                                                                        if ($studentAttendance) {
+                                                                            $status = $studentAttendance->status;
+                                                                        }
+                                                                    ?>
+                                                                    <?php if($status == 'present'): ?>
+                                                                        <span class="badge bg-success">Present</span>
+                                                                    <?php else: ?>
+                                                                        <span class="badge bg-danger">Absent</span>
+                                                                    <?php endif; ?>
+                                                                <?php endif; ?>
                                                             </td>
                                                             <td>
-                                                                <a type="button" class="btn btn-sm btn-danger"
-                                                                    title="Delete" data-bs-toggle="modal"
-                                                                    data-bs-target="#deleteAttendanceModal<?php echo e($attendance->id); ?>">
-                                                                    <i class="ri-delete-bin-line"></i>
-                                                                </a>
+                                                                <?php if(Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher')): ?>
+                                                                    <a type="button" class="btn btn-sm btn-danger"
+                                                                        title="Delete" data-bs-toggle="modal"
+                                                                        data-bs-target="#deleteAttendanceModal<?php echo e($attendance->id); ?>">
+                                                                        <i class="ri-delete-bin-line"></i>
+                                                                    </a>
+                                                                <?php elseif(Auth::user()->hasRole('Student')): ?>
+                                                                    <a class="btn btn-sm btn-secondary"
+                                                                        href="<?php echo e(route('presentstudent', $attendance->id)); ?>"
+                                                                        title="Present">
+                                                                        <i class=" ri-check-line"></i>
+                                                                    </a>
+                                                                    <a class="btn btn-sm btn-danger"
+                                                                        href="<?php echo e(route('absentstudent', $attendance->id)); ?>"
+                                                                        title="Absent">
+                                                                        <i class="ri-close-line"></i>
+                                                                    </a>
+                                                                <?php endif; ?>
                                                                 <div class="modal fade
                                                                     "
                                                                     id="deleteAttendanceModal<?php echo e($attendance->id); ?>"

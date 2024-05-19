@@ -12,13 +12,25 @@ use App\Models\Material;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 
 class CourseController extends Controller
 {
     public function index()
     {
-        $courses = Course::all();
+        if (Auth::user()->hasRole('Super Admin')) {
+            $courses = Course::all();
+        } else if (Auth::user()->hasRole('Teacher')) {
+            $courses = Course::where('teacher_id', Auth::user()->id)->get();
+        } else if (Auth::user()->hasRole('Student')) {
+            $courses = CourseStudent::where('student_id', Auth::user()->id)->get();
+            $courses = $courses->map(function ($course) {
+                return Course::find($course->course_id);
+            });
+        } else {
+            $courses = Course::all();
+        }
         $students = User::whereHas('roles', function ($q) {
             $q->where('name', 'Student');
         })->get();
@@ -70,7 +82,6 @@ class CourseController extends Controller
         $materials = Material::where('course_id', $id)->get();
         $studentsInCourse = CourseStudent::where('course_id', $id)->get();
         $attendances = Attendance::where('course_id', $id)->get();
-
         $discussions = Discussion::with('user', 'course')->where('course_id', $id)->get();
         return view('menu.course_management.show', compact('course', 'students', 'assignments', 'materials', 'studentsInCourse', 'attendances', 'discussions'));
     }
@@ -154,5 +165,31 @@ class CourseController extends Controller
         $courseStudent->delete();
 
         return redirect()->back()->with('success', 'Student removed from course successfully');
+    }
+
+    public function enrollCourse(Request $request)
+    {
+        // dd($request->all());
+        $validator = \Validator::make($request->all(), [
+            'code' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $course = Course::where('code', $request->code)->first();
+
+        $courseStudent = new CourseStudent();
+        //check if student already in course
+        $check = CourseStudent::where('course_id', $course->id)->where('student_id', Auth::user()->id)->first();
+        if ($check) {
+            return redirect()->back()->with('warning', 'You are already enrolled in this course');
+        }
+        $courseStudent->course_id = $course->id;
+        $courseStudent->student_id = Auth::user()->id;
+        $courseStudent->save();
+
+        return redirect()->back()->with('success', 'Course enrolled successfully');
     }
 }

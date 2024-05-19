@@ -56,6 +56,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/edit/{id}', 'edit')->name('editcourse');
             Route::post('/update/{id}', 'update')->name('updatecourse');
             Route::post('/delete/{id}', 'destroy')->name('deletecourse');
+            //enroll course 
+            Route::post('/enroll', 'enrollCourse')->name('enrollcourse');
             Route::post('/addstudenttocourse', 'addStudentToCourse')->name('addstudenttocourse');
             Route::post('/removestudentfromcourse', 'removeStudentFromCourse')->name('removestudentfromcourse');
         });
@@ -70,6 +72,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/edit/{id}', 'edit')->name('editattendance');
             Route::post('/update/{id}', 'update')->name('updateattendance');
             Route::get('/delete/{id}', 'destroy')->name('deleteattendance');
+            //present student
+            Route::get('/present/{id}', 'present')->name('presentstudent');
+            //absent student
+            Route::get('/absent/{id}', 'absent')->name('absentstudent');
         });
     });
 
@@ -83,6 +89,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/update/{id}', 'update')->name('updateassignment');
             Route::get('/delete/{id}', 'destroy')->name('deleteassignment');
             Route::get('/download/{id}', 'download')->name('downloadassignment');
+            //upload assignment
+            Route::post('/upload', 'upload')->name('uploadassignment');
+            //download student assignment
+            Route::get('/downloadstudentassignment/{id}', 'downloadStudentAssignment')->name('downloadstudentassignment');
         });
     });
 

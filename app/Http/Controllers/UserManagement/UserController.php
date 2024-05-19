@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Course;
+use App\Models\CourseStudent;
 
 class UserController extends Controller
 {
@@ -34,7 +37,7 @@ class UserController extends Controller
         if ($request->role != 'Select Role') {
             $user->assignRole($request->role);
         }
-        return redirect()->route('viewusers')->with('success', 'User Added Successfully');
+        return redirect()->back()->with('success', 'User Added Successfully');
     }
 
     public function show($id)
@@ -69,7 +72,7 @@ class UserController extends Controller
         if ($request->role != 'Select Role') {
             $user->syncRoles($request->role);
         }
-        return redirect()->route('viewusers')->with('success', 'User Updated Successfully');
+        return redirect()->back()->with('success', 'User Updated Successfully');
     }
 
     public function destroy($id)
@@ -81,9 +84,21 @@ class UserController extends Controller
 
     public function getStudents()
     {
-        $users = User::whereHas('roles', function ($q) {
-            $q->where('name', 'Student');
-        })->get();
+        if (Auth::user()->hasRole('Teacher')) {
+            $users = [];
+            $allcourses = Course::where('teacher_id', Auth::user()->id)->get();
+            foreach ($allcourses as $course) {
+                $courseStudent = CourseStudent::where('course_id', $course->id)->get();
+            }
+            foreach ($courseStudent as $student) {
+                $users = User::where('id', $student->student_id)->get();
+            }
+        } else {
+            $users = User::whereHas('roles', function ($q) {
+                $q->where('name', 'Student');
+            })->get();
+        }
+
         return view('menu.students.list', compact('users'));
     }
 

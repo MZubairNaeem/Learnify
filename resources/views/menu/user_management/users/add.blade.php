@@ -18,7 +18,7 @@
 @endcomponent
 
 <!-- Session Messages -->
-
+@include('partials.session')
 <!-- Add employee Form -->
 <div class="row">
     <div class="col-lg-12">

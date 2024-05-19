@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Assignment;
 
 use App\Http\Controllers\Controller;
+use App\Models\StudentAssignment;
 use Illuminate\Http\Request;
 use App\Models\Assignment;
 
@@ -78,5 +79,38 @@ class AssignmentController extends Controller
     {
         $assignment = Assignment::findOrFail($id);
         return response()->download(storage_path('app/public/' . $assignment->file));
+    }
+
+    public function upload(Request $request)
+    {
+        $validator = \Validator::make($request->all(), [
+            'file' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('warning', 'All fields are required')->withErrors($validator)->withInput();
+        }
+
+        $studentAssignment = new StudentAssignment();
+        $studentAssignment->assignment_id = $request->assignment_id;
+        $studentAssignment->student_id = auth()->user()->id;
+        $studentAssignment->save();
+
+        //upload file
+        if ($request->hasFile('file')) {
+            $fileName = time() . $request->file('file')->getClientOriginalName();
+            $fileName = str_replace(' ', '', $fileName);
+            $path = $request->file('file')->storeAs('assignment', $fileName, 'public');
+            $studentAssignment->file = $path;
+            $studentAssignment->save();
+        }
+
+        return redirect()->back()->with('success', 'Assignment uploaded successfully');
+    }
+
+    public function downloadstudentassignment($id)
+    {
+        $studentAssignment = StudentAssignment::findOrFail($id);
+        return response()->download(storage_path('app/public/' . $studentAssignment->file));
     }
 }

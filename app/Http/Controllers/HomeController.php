@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
+use App\Models\CourseStudent;
+use App\Models\Material;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
+use App\Models\Assignment;
 
 class HomeController extends Controller
 {
@@ -36,7 +40,93 @@ class HomeController extends Controller
 
     public function root()
     {
-        return view('index');
+        if (Auth::user()->hasRole('Super Admin')) {
+            $assignmentCount = Assignment::count();
+            $studentCount = User::whereHas('roles', function ($q) {
+                $q->where('name', 'student');
+            })->count();
+            $teacherCount = User::whereHas('roles', function ($q) {
+                $q->where('name', 'teacher');
+            })->count();
+            $courseCount = Course::count();
+        } else if (Auth::user()->hasRole('Teacher')) {
+            $assignmentCount = Assignment::where('created_by', Auth::user()->id)->count();
+            $studentCount = 0;
+            $allcourses = Course::where('teacher_id', Auth::user()->id)->get();
+            $courseStudent = collect(); // Initialize $courseStudent as an empty collection
+
+            if ($allcourses->count() > 0) {
+                foreach ($allcourses as $course) {
+                    $courseStudents = CourseStudent::where('course_id', $course->id)->get();
+                    $courseStudent = $courseStudent->merge($courseStudents); // Merge course students into $courseStudent collection
+                }
+            }
+
+            if ($courseStudent->count() > 0) {
+                foreach ($courseStudent as $student) {
+                    $studentCount += User::where('id', $student->student_id)->count(); // Increment $studentCount for each user found
+                }
+            }
+
+            $teacherCount = User::whereHas('roles', function ($q) {
+                $q->where('name', 'teacher');
+            })->count();
+            $courseCount = Course::where('created_by', Auth::user()->id)->count();
+        } else if (Auth::user()->hasRole('Student')) {
+            $studentCount = 0;
+            $teacherCount = 0;
+            $courseStudent = CourseStudent::where('student_id', Auth::user()->id)->get();
+            $courseCount = Course::whereIn('id', $courseStudent->pluck('course_id'))->count();
+
+
+            $assignmentCount = Assignment::whereIn('course_id', $courseStudent->pluck('course_id'))->count();
+        } else {
+            $assignmentCount = 0;
+            $studentCount = 0;
+            $teacherCount = 0;
+            $courseCount = 0;
+        }
+
+
+        if (Auth::user()->hasRole('Super Admin')) {
+            $users = User::where('id', '!=', '1')->latest()->take(5)->get();
+            $courses = Course::latest()->take(5)->get();
+            $assignments = Assignment::latest()->take(5)->get();
+            $materials = Material::latest()->take(5)->get();
+        } else if (Auth::user()->hasRole('Teacher')) {
+            //get those users who are in the same course created by the teacher
+            $users = [];
+            $allcourses = Course::where('teacher_id', Auth::user()->id)->get();
+            foreach ($allcourses as $course) {
+                $courseStudent = CourseStudent::where('course_id', $course->id)->get();
+            }
+            foreach ($courseStudent as $student) {
+                $users = User::where('id', $student->student_id)->get();
+            }
+
+
+
+            $courses = Course::where('created_by', Auth::user()->id)->latest()->take(5)->get();
+            $assignments = Assignment::where('created_by', Auth::user()->id)->latest()->take(5)->get();
+            $materials = Material::where('created_by', Auth::user()->id)->latest()->take(5)->get();
+        } else if (Auth::user()->hasRole('Student')) {
+            $users = [];
+            //get those courses in which the student is enrolled
+            $courseStudent = CourseStudent::where('student_id', Auth::user()->id)->get();
+            $courses = Course::whereIn('id', $courseStudent->pluck('course_id'))->get();
+
+            $assignments = Assignment::whereIn('course_id', $courseStudent->pluck('course_id'))->get();
+
+            $materials = Material::whereIn('course_id', $courseStudent->pluck('course_id'))->get();
+
+
+        } else {
+            $users = [];
+            $courses = [];
+            $assignments = [];
+            $materials = [];
+        }
+        return view('index', compact('assignmentCount', 'studentCount', 'teacherCount', 'courseCount', 'users', 'courses', 'assignments', 'materials'));
     }
 
     /*Language Translation*/
@@ -70,7 +160,7 @@ class HomeController extends Controller
             $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
             $avatarPath = public_path('/images/');
             $avatar->move($avatarPath, $avatarName);
-            $user->avatar =  $avatarName;
+            $user->avatar = $avatarName;
         }
 
         $user->update();

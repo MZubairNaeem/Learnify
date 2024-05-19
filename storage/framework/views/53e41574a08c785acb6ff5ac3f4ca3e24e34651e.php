@@ -18,6 +18,7 @@
 
 <!-- Session Messages -->
 
+<?php echo $__env->make('partials.session', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <!-- Add employee Form -->
 <div class="row">
     <div class="col-lg-12">

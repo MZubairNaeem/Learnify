@@ -76,11 +76,11 @@ Students
                                         @endif
                                     <td style="white-space: normal !important;">
                                         @if ($user->username != 'admin')
-                                            @can('Edit Role')
+                                            @can('Student')
                                                 <a href="{{ route('edituser',  encrypt($user->id)) }}"
                                                     class="btn btn-sm btn-success">Edit</a>
                                             @endcan
-                                            @can('Delete Role')
+                                            @can('Student')
                                                 <a data-bs-toggle="modal" data-bs-target="#deleteModal{{ $key }}"
                                                     class="btn btn-sm btn-danger">Delete</a>
                                             @endcan

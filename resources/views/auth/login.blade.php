@@ -82,9 +82,7 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <div class="float-end">
-                                                <a href="auth-pass-reset-basic" class="text-muted">Forgot password?</a>
-                                            </div>
+
                                             <label class="form-label" for="password-input">Password</label>
                                             <div x-data="{ show: false }"
                                                 class="position-relative auth-pass-inputgroup mb-3">
@@ -96,26 +94,27 @@
                                                 <div class="position-absolute top-50 end-0 translate-middle-y me-3">
                                                     <a href="javascript: void(0);" class="text-muted"
                                                         x-on:click="show = !show">
-                                                        <i class="mdi mdi-eye-outline" x-bind:class="{'mdi-eye': show, 'mdi-eye-outline': !show}"></i>
+                                                        <i class="mdi mdi-eye-outline"
+                                                            x-bind:class="{ 'mdi-eye': show, 'mdi-eye-outline': !show }"></i>
                                                     </a>
-                                                @error('password')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
+                                                    @error('password')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
                                             </div>
-                                        </div>
 
 
 
-                                        <div class="mt-4">
-                                            <button class="btn btn-secondary w-100" type="submit">Sign In</button>
-                                        </div>
+                                            <div class="mt-4">
+                                                <button class="btn btn-secondary w-100" type="submit">Sign In</button>
+                                            </div>
 
-                                        <div class="mt-4 text-center">
-                                            <p class="mb-0">Don't have an account ? <a href="register"
-                                                    class="fw-bold text-secondary"> Signup </a> </p>
-                                        </div>
+                                            <div class="mt-4 text-center">
+                                                <p class="mb-0">Don't have an account ? <a href="register"
+                                                        class="fw-bold text-secondary"> Signup </a> </p>
+                                            </div>
 
                                     </form>
                                 </div>

@@ -95,9 +95,7 @@ unset($__errorArgs, $__bag); ?>
                                         </div>
 
                                         <div class="mb-3">
-                                            <div class="float-end">
-                                                <a href="auth-pass-reset-basic" class="text-muted">Forgot password?</a>
-                                            </div>
+
                                             <label class="form-label" for="password-input">Password</label>
                                             <div x-data="{ show: false }"
                                                 class="position-relative auth-pass-inputgroup mb-3">
@@ -116,33 +114,34 @@ unset($__errorArgs, $__bag); ?>"
                                                 <div class="position-absolute top-50 end-0 translate-middle-y me-3">
                                                     <a href="javascript: void(0);" class="text-muted"
                                                         x-on:click="show = !show">
-                                                        <i class="mdi mdi-eye-outline" x-bind:class="{'mdi-eye': show, 'mdi-eye-outline': !show}"></i>
+                                                        <i class="mdi mdi-eye-outline"
+                                                            x-bind:class="{ 'mdi-eye': show, 'mdi-eye-outline': !show }"></i>
                                                     </a>
-                                                <?php $__errorArgs = ['password'];
+                                                    <?php $__errorArgs = ['password'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong><?php echo e($message); ?></strong>
-                                                    </span>
-                                                <?php unset($message);
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong><?php echo e($message); ?></strong>
+                                                        </span>
+                                                    <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                                                </div>
                                             </div>
-                                        </div>
 
 
 
-                                        <div class="mt-4">
-                                            <button class="btn btn-secondary w-100" type="submit">Sign In</button>
-                                        </div>
+                                            <div class="mt-4">
+                                                <button class="btn btn-secondary w-100" type="submit">Sign In</button>
+                                            </div>
 
-                                        <div class="mt-4 text-center">
-                                            <p class="mb-0">Don't have an account ? <a href="register"
-                                                    class="fw-bold text-secondary"> Signup </a> </p>
-                                        </div>
+                                            <div class="mt-4 text-center">
+                                                <p class="mb-0">Don't have an account ? <a href="register"
+                                                        class="fw-bold text-secondary"> Signup </a> </p>
+                                            </div>
 
                                     </form>
                                 </div>

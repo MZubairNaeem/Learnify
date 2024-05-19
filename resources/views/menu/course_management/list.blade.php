@@ -24,9 +24,45 @@
     <div class="row mb-2">
         <div class="col-12">
             <div class="text-end">
-                <a href="{{ route('addcourse') }}" class="btn btn-primary waves-effect waves-light">
-                    <i class="ri-add-line align-middle me-2"></i> Add Course
-                </a>
+                @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                    <a href="{{ route('addcourse') }}" class="btn btn-primary waves-effect waves-light">
+                        <i class="ri-add-line align-middle me-2"></i> Add Course
+                    </a>
+                @else
+                    <a type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#enroll">
+                        <i class="ri-add-line align-middle me-2"></i> Enroll Course
+                    </a>
+                    <div class="modal fade
+                                " id="enroll" tabindex="-1"
+                        aria-labelledby="enrollLabel">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="enrollLabel">Enroll
+                                        Course</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body
+                                            ">
+                                    <form method="POST" action="{{ route('enrollcourse') }}">
+                                        @csrf
+                                        @method('POST')
+                                        <div class="row">
+                                            <input type="text" required class="form-control" name="code"
+                                                placeholder="Enter Course Code">
+                                            <div class="col-md-12 form-group mb-2">
+                                                <a style="margin-right:3px;" href=""
+                                                    class="btn btn-danger btn-sm">Cancel</a>
+                                                <input type="submit" class="btn btn-success btn-sm">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -41,13 +77,15 @@
                                     <h3 class="card-title text-primary text-bold">{{ $course->name }}</h3>
                                 </div>
                                 <div>
-                                    <a class="btn btn-sm btn-info" href="{{ route('showcourse',$course->id) }}">
+                                    <a class="btn btn-sm btn-info" href="{{ route('showcourse', $course->id) }}">
                                         <i class="ri-eye-line"></i>
                                     </a>
-                                    <a type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal{{ $course->id }}">
-                                        <i class="ri-delete-bin-line"></i>
-                                    </a>
+                                    @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                        <a type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal{{ $course->id }}">
+                                            <i class="ri-delete-bin-line"></i>
+                                        </a>
+                                    @endif
                                     <div class="modal fade
                                         "
                                         id="deleteModal{{ $course->id }}" tabindex="-1"
@@ -78,10 +116,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <a type="button" href="{{ route('editcourse', $course->id) }}"
-                                        class="btn btn-sm btn-primary">
-                                        <i class="ri-pencil-line"></i>
-                                    </a>
+                                    @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                        <a type="button" href="{{ route('editcourse', $course->id) }}"
+                                            class="btn btn-sm btn-primary">
+                                            <i class="ri-pencil-line"></i>
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col d-flex justify-content-between mt-2">
@@ -108,16 +148,19 @@
                                     <p class="card-text mx-3">
                                         {{ $course->students->count() }}
                                     </p>
-                                    <a type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#addStudentModal{{ $course->id }}">
-                                        <i class="ri-user-add-line"></i>
-                                    </a>
+                                    @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                        <a type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#addStudentModal{{ $course->id }}">
+                                            <i class="ri-user-add-line"></i>
+                                        </a>
+                                    @endif
                                     <div class="modal fade" id="addStudentModal{{ $course->id }}" tabindex="-1"
                                         aria-labelledby="exampleModalgridLabel">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="addStudentModalLabel">Add Student to Course
+                                                    <h5 class="modal-title" id="addStudentModalLabel">Add Student to
+                                                        Course
                                                     </h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
@@ -156,10 +199,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <a type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
-                                data-bs-target="#attendanceModal{{ $course->id }}">
-                                Create Attendance
-                            </a>
+                            @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                <a type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                    data-bs-target="#attendanceModal{{ $course->id }}">
+                                    Create Attendance
+                                </a>
+                            @endif
                             <div class="modal fade
                                 "
                                 id="attendanceModal{{ $course->id }}" tabindex="-1"

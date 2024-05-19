@@ -79,11 +79,11 @@ Students
                                         <?php endif; ?>
                                     <td style="white-space: normal !important;">
                                         <?php if($user->username != 'admin'): ?>
-                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Edit Role')): ?>
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Student')): ?>
                                                 <a href="<?php echo e(route('edituser',  encrypt($user->id))); ?>"
                                                     class="btn btn-sm btn-success">Edit</a>
                                             <?php endif; ?>
-                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Delete Role')): ?>
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Student')): ?>
                                                 <a data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo e($key); ?>"
                                                     class="btn btn-sm btn-danger">Delete</a>
                                             <?php endif; ?>
