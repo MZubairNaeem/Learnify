@@ -3,7 +3,7 @@
 <?php $__env->stopSection(); ?>
 <style>
     .custom-auth-bg {
-        background: #6699ff !important;
+        background: #27314F !important;
         background-size: cover;
     }
 
@@ -17,7 +17,7 @@
     }
 
     .card {
-        box-shadow: 0 4px 8px 0 #6699ff, 0 6px 20px 0 #6699ff !important;
+        box-shadow: 0 4px 8px 0 #27314F, 0 6px 20px 0 #27314F !important;
     }
 
     .invalid-feedback {
@@ -60,7 +60,7 @@
 
                             <div class="card-body p-4">
                                 <div class="text-center mt-2">
-                                    <h5 class="text-secondary">Create New Account</h5>
+                                    <h5 style="color: #27314F" class="">Create New Account</h5>
                                     <p class="text-muted">Sign up to explore more</p>
                                 </div>
                                 <div class="p-2 mt-4">
@@ -182,11 +182,11 @@ unset($__errorArgs, $__bag); ?>"
                                                 <option value="teacher">Teacher</option>
                                             </select>
                                             <div class="mt-4">
-                                                <button class="btn btn-secondary w-100" type="submit">Sign Up</button>
+                                                <button  style="background: #27314F" class="btn text-white w-100" type="submit">Sign Up</button>
                                             </div>
                                             <div class="mt-4 text-center">
                                                 <p class="mb-0">Already have an account ? <a href="auth-signin-basic"
-                                                        class="fw-bold text-secondary"> Signin </a> </p>
+                                                    style="color: #27314F"   class="fw-bold "> Signin </a> </p>
                                             </div>
                                     </form>
                                 </div>
