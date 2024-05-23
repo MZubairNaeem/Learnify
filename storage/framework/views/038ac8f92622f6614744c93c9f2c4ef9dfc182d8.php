@@ -142,9 +142,9 @@
                 <?php if(Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher')): ?>
                     <h4 class="card-title mb-0">
                         <?php if(Auth::user()->hasRole('Super Admin')): ?>
-                            Resent Users
+                            Recent Users
                         <?php else: ?>
-                            Resent Students
+                            Recent Students
                         <?php endif; ?>
                     </h4>
                     <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -174,7 +174,7 @@
                     <hr>
                 <?php endif; ?>
                 <h4 class="card-title mt-3">
-                    Resent Courses
+                    Recent Courses
                 </h4>
                 <?php $__currentLoopData = $courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="mini-stats-wid d-flex align-items-center mt-3">
@@ -202,7 +202,7 @@
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 <hr>
                 <h4 class="card-title mt-3">
-                    Resent Assignments
+                    Recent Assignments
                 </h4>
                 <?php $__currentLoopData = $assignments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $assignment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="mini-stats-wid d-flex align-items-center mt-3">
@@ -230,7 +230,7 @@
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 <hr>
                 <h4 class="card-title mt-3">
-                    Resent Material Upload
+                    Recent Material Upload
                 </h4>
                 <?php $__currentLoopData = $materials; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $material): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="mini-stats-wid d-flex align-items-center mt-3">

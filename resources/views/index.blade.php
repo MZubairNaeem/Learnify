@@ -148,9 +148,9 @@
                 @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
                     <h4 class="card-title mb-0">
                         @if (Auth::user()->hasRole('Super Admin'))
-                            Resent Users
+                            Recent Users
                         @else
-                            Resent Students
+                            Recent Students
                         @endif
                     </h4>
                     @foreach ($users as $user)
@@ -178,7 +178,7 @@
                     <hr>
                 @endif
                 <h4 class="card-title mt-3">
-                    Resent Courses
+                    Recent Courses
                 </h4>
                 @foreach ($courses as $course)
                     <div class="mini-stats-wid d-flex align-items-center mt-3">
@@ -204,7 +204,7 @@
                 @endforeach
                 <hr>
                 <h4 class="card-title mt-3">
-                    Resent Assignments
+                    Recent Assignments
                 </h4>
                 @foreach ($assignments as $assignment)
                     <div class="mini-stats-wid d-flex align-items-center mt-3">
@@ -230,7 +230,7 @@
                 @endforeach
                 <hr>
                 <h4 class="card-title mt-3">
-                    Resent Material Upload
+                    Recent Material Upload
                 </h4>
                 @foreach ($materials as $material)
                     <div class="mini-stats-wid d-flex align-items-center mt-3">
