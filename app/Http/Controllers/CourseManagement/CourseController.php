@@ -50,6 +50,7 @@ class CourseController extends Controller
     {
         $validator = \Validator::make($request->all(), [
             'name' => 'required',
+            'code' => 'required',
             'teacher' => 'required',
             'startDate' => 'required',
             'endDate' => 'required',
@@ -59,9 +60,13 @@ class CourseController extends Controller
             return redirect()->back()->with('warning', 'All fields are required')->withErrors($validator)->withInput();
         }
 
+        if (Course::where('code', $request->code)->exists()) {
+            return redirect()->back()->with('warning', 'Course code already exists')->withInput();
+        }
+
         $course = new Course();
         $course->name = $request->name;
-        $course->code = Str::random(6);
+        $course->code = $request->code;
         $course->teacher_id = $request->teacher;
         $course->created_by = auth()->user()->id;
         $course->start_date = $request->startDate;
@@ -83,7 +88,13 @@ class CourseController extends Controller
         $studentsInCourse = CourseStudent::where('course_id', $id)->get();
         $attendances = Attendance::where('course_id', $id)->get();
         $discussions = Discussion::with('user', 'course')->where('course_id', $id)->get();
-        return view('menu.course_management.show', compact('course', 'students', 'assignments', 'materials', 'studentsInCourse', 'attendances', 'discussions'));
+
+        $isExpired = false;
+        $today = date('Y-m-d');
+        if ($course->end_date < $today) {
+            $isExpired = true;
+        }
+        return view('menu.course_management.show', compact('course', 'students', 'assignments', 'materials', 'studentsInCourse', 'attendances', 'discussions', 'isExpired'));
     }
 
     public function edit($id)
@@ -99,6 +110,7 @@ class CourseController extends Controller
     {
         $validator = \Validator::make($request->all(), [
             'name' => 'required',
+            'code' => 'required',
             'teacher' => 'required',
             'startDate' => 'required',
             'endDate' => 'required',
@@ -110,6 +122,7 @@ class CourseController extends Controller
 
         $course = Course::findOrFail($id);
         $course->name = $request->name;
+        $course->code = $request->code;
         $course->teacher_id = $request->teacher;
         $course->start_date = $request->startDate;
         $course->end_date = $request->endDate;
@@ -179,6 +192,11 @@ class CourseController extends Controller
         }
 
         $course = Course::where('code', $request->code)->first();
+
+        $today = date('Y-m-d');
+        if ($course->end_date < $today) {
+            return redirect()->back()->with('warning', 'Course has expired');
+        }
 
         $courseStudent = new CourseStudent();
         //check if student already in course

@@ -29,6 +29,11 @@
                         <div class="d-flex justify-content-between">
                             <div class="col">
                                 <h3 class="card-title fs-20 text-primary text-bold"title="Course Name">{{ $course->name }}
+                                    @if ($isExpired)
+                                        <span class="badge bg-danger">
+                                            Unavailable
+                                        </span>
+                                    @endif
                                 </h3>
                             </div>
                             <div>
@@ -107,229 +112,239 @@
                             <div class="card-header border-0">
                                 <div class="row g-4">
                                     <div class="col-sm-auto">
-                                        <div>
-                                            @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
-                                                <a class="btn btn-sm
-                                            btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#addproductModal">
-                                                    <i class="ri-add-line align-bottom me-1"></i> Add Assignment
-                                                </a>
-                                            @endif
-                                            <div class="modal fade" id="addproductModal" tabindex="-1"
-                                                aria-labelledby="addproductModalLabel">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="addproductModalLabel">Add
-                                                                Assignment
-                                                            </h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                        </div>
-                                                        <div
-                                                            class="modal-body
+                                        @if (!$isExpired)
+                                            <div>
+                                                @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                                    <a class="btn btn-sm
+                                                btn-primary"
+                                                        data-bs-toggle="modal" data-bs-target="#addproductModal">
+                                                        <i class="ri-add-line align-bottom me-1"></i> Add Assignment
+                                                    </a>
+                                                @endif
+                                                <div class="modal fade" id="addproductModal" tabindex="-1"
+                                                    aria-labelledby="addproductModalLabel">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="addproductModalLabel">Add
+                                                                    Assignment
+                                                                </h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div
+                                                                class="modal-body
                                                     ">
-                                                            <form method="POST" action="{{ route('storeassignment') }}"
-                                                                enctype="multipart/form-data">
-                                                                @csrf
-                                                                @method('POST')
-                                                                <div class="row">
-                                                                    <div class="col-md-6 mb-3">
-                                                                        <label for="title" class="form-label">Title
-                                                                            <span style="color: red"> *</span>
-                                                                        </label>
-                                                                        <input type="text" class="form-control"
-                                                                            name="title" placeholder="Enter Title">
+                                                                <form method="POST"
+                                                                    action="{{ route('storeassignment') }}"
+                                                                    enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    @method('POST')
+                                                                    <div class="row">
+                                                                        <div class="col-md-6 mb-3">
+                                                                            <label for="title" class="form-label">Title
+                                                                                <span style="color: red"> *</span>
+                                                                            </label>
+                                                                            <input type="text" class="form-control"
+                                                                                name="title" placeholder="Enter Title">
+                                                                        </div>
+                                                                        <div class="col-md-6 mb-3">
+                                                                            <label for="due_date" class="form-label">Due
+                                                                                Date
+                                                                                <span style="color: red"> *</span>
+                                                                            </label>
+                                                                            <input type="date" class="form-control"
+                                                                                name="due_date" placeholder="Select Date">
+                                                                        </div>
+                                                                        <div class="col-md-12 mb-3">
+                                                                            <label for="file" class="form-label">File
+                                                                                <span style="color: red"> *</span>
+                                                                            </label>
+                                                                            <input type="file" class="form-control"
+                                                                                name="file" placeholder="Select File">
+                                                                        </div>
+                                                                        <input type="hidden" name="course"
+                                                                            value="{{ $course->id }}">
+                                                                        <div class="col-md-12 form-group mb-2">
+                                                                            <a style="margin-right:3px;" href=""
+                                                                                class="btn btn-danger btn-sm">Cancel</a>
+                                                                            <input type="submit"
+                                                                                class="btn btn-success btn-sm">
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="col-md-6 mb-3">
-                                                                        <label for="due_date" class="form-label">Due Date
-                                                                            <span style="color: red"> *</span>
-                                                                        </label>
-                                                                        <input type="date" class="form-control"
-                                                                            name="due_date" placeholder="Select Date">
-                                                                    </div>
-                                                                    <div class="col-md-12 mb-3">
-                                                                        <label for="file" class="form-label">File
-                                                                            <span style="color: red"> *</span>
-                                                                        </label>
-                                                                        <input type="file" class="form-control"
-                                                                            name="file" placeholder="Select File">
-                                                                    </div>
-                                                                    <input type="hidden" name="course"
-                                                                        value="{{ $course->id }}">
-                                                                    <div class="col-md-12 form-group mb-2">
-                                                                        <a style="margin-right:3px;" href=""
-                                                                            class="btn btn-danger btn-sm">Cancel</a>
-                                                                        <input type="submit"
-                                                                            class="btn btn-success btn-sm">
-                                                                    </div>
-                                                                </div>
-                                                            </form>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
-                                                <a class="btn btn-sm
+                                                @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                                    <a class="btn btn-sm
                                             btn-secondary"
-                                                    data-bs-toggle="modal" data-bs-target="#addMaterialModal">
-                                                    <i class="ri-add-line align-bottom me-1"></i> Add Material
-                                                </a>
-                                            @endif
+                                                        data-bs-toggle="modal" data-bs-target="#addMaterialModal">
+                                                        <i class="ri-add-line align-bottom me-1"></i> Add Material
+                                                    </a>
+                                                @endif
 
-                                            <div class="modal fade
+                                                <div class="modal fade
                                             "
-                                                id="addMaterialModal" tabindex="-1"
-                                                aria-labelledby="addMaterialModalLabel">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="addMaterialModalLabel">Add
-                                                                Material
-                                                            </h5>
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div
-                                                            class="modal-body
+                                                    id="addMaterialModal" tabindex="-1"
+                                                    aria-labelledby="addMaterialModalLabel">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="addMaterialModalLabel">Add
+                                                                    Material
+                                                                </h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div
+                                                                class="modal-body
                                                     ">
-                                                            <form method="POST" action="{{ route('storematerial') }}"
-                                                                enctype="multipart/form-data">
-                                                                @csrf
-                                                                @method('POST')
-                                                                <div class="row">
-                                                                    <div class="col-md-6 mb-3">
-                                                                        <label for="title" class="form-label">Title
-                                                                            <span style="color: red"> *</span>
-                                                                        </label>
-                                                                        <input type="text" class="form-control"
-                                                                            name="title" placeholder="Enter Title">
+                                                                <form method="POST"
+                                                                    action="{{ route('storematerial') }}"
+                                                                    enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    @method('POST')
+                                                                    <div class="row">
+                                                                        <div class="col-md-6 mb-3">
+                                                                            <label for="title" class="form-label">Title
+                                                                                <span style="color: red"> *</span>
+                                                                            </label>
+                                                                            <input type="text" class="form-control"
+                                                                                name="title" placeholder="Enter Title">
+                                                                        </div>
+                                                                        <div class="col-md-6 mb-3">
+                                                                            <label for="file" class="form-label">File
+                                                                                <span style="color: red"> *</span>
+                                                                            </label>
+                                                                            <input type="file" class="form-control"
+                                                                                name="file" placeholder="Select File">
+                                                                        </div>
+                                                                        <input type="hidden" name="course"
+                                                                            value="{{ $course->id }}">
+                                                                        <div class="col-md-12 form-group mb-2">
+                                                                            <a style="margin-right:3px;" href=""
+                                                                                class="btn btn-danger btn-sm">Cancel</a>
+                                                                            <input type="submit"
+                                                                                class="btn btn-success btn-sm">
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="col-md-6 mb-3">
-                                                                        <label for="file" class="form-label">File
-                                                                            <span style="color: red"> *</span>
-                                                                        </label>
-                                                                        <input type="file" class="form-control"
-                                                                            name="file" placeholder="Select File">
-                                                                    </div>
-                                                                    <input type="hidden" name="course"
-                                                                        value="{{ $course->id }}">
-                                                                    <div class="col-md-12 form-group mb-2">
-                                                                        <a style="margin-right:3px;" href=""
-                                                                            class="btn btn-danger btn-sm">Cancel</a>
-                                                                        <input type="submit"
-                                                                            class="btn btn-success btn-sm">
-                                                                    </div>
-                                                                </div>
-                                                            </form>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
-                                                <a type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
-                                                    data-bs-target="#addStudentModal{{ $course->id }}">
-                                                    <i class="ri-user-2-line align-bottom me-1"></i> Add Student
-                                                </a>
-                                            @endif
-                                            <div class="modal fade" id="addStudentModal{{ $course->id }}"
-                                                tabindex="-1" aria-labelledby="exampleModalgridLabel">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="addStudentModalLabel">Add Student
-                                                                to Course
-                                                            </h5>
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div
-                                                            class="modal-body
+                                                @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                                    <a type="button" class="btn btn-sm btn-success"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#addStudentModal{{ $course->id }}">
+                                                        <i class="ri-user-2-line align-bottom me-1"></i> Add Student
+                                                    </a>
+                                                @endif
+                                                <div class="modal fade" id="addStudentModal{{ $course->id }}"
+                                                    tabindex="-1" aria-labelledby="exampleModalgridLabel">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="addStudentModalLabel">Add
+                                                                    Student
+                                                                    to Course
+                                                                </h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div
+                                                                class="modal-body
                                                     ">
-                                                            <form method="POST"
-                                                                action="{{ route('addstudenttocourse') }}">
-                                                                @csrf
-                                                                @method('POST')
-                                                                <div class="row">
-                                                                    <div class="col-md-6 mb-3">
-                                                                        <label for="student" class="form-label">Student
-                                                                            <span style="color: red"> *</span>
-                                                                        </label>
-                                                                        <select class="form-select" name="student"
-                                                                            required>
-                                                                            <option value="">Select Student</option>
-                                                                            @foreach ($students as $student)
-                                                                                <option value="{{ $student->id }}">
-                                                                                    {{ $student->username }}</option>
-                                                                            @endforeach
-                                                                        </select>
+                                                                <form method="POST"
+                                                                    action="{{ route('addstudenttocourse') }}">
+                                                                    @csrf
+                                                                    @method('POST')
+                                                                    <div class="row">
+                                                                        <div class="col-md-6 mb-3">
+                                                                            <label for="student"
+                                                                                class="form-label">Student
+                                                                                <span style="color: red"> *</span>
+                                                                            </label>
+                                                                            <select class="form-select" name="student"
+                                                                                required>
+                                                                                <option value="">Select Student
+                                                                                </option>
+                                                                                @foreach ($students as $student)
+                                                                                    <option value="{{ $student->id }}">
+                                                                                        {{ $student->username }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                        <input type="hidden" name="course"
+                                                                            value="{{ $course->id }}">
+                                                                        <div class="col-md-12 form-group mb-2">
+                                                                            <a style="margin-right:3px;" href=""
+                                                                                class="btn btn-danger btn-sm">Cancel</a>
+                                                                            <input type="submit"
+                                                                                class="btn btn-success btn-sm">
+                                                                        </div>
                                                                     </div>
-                                                                    <input type="hidden" name="course"
-                                                                        value="{{ $course->id }}">
-                                                                    <div class="col-md-12 form-group mb-2">
-                                                                        <a style="margin-right:3px;" href=""
-                                                                            class="btn btn-danger btn-sm">Cancel</a>
-                                                                        <input type="submit"
-                                                                            class="btn btn-success btn-sm">
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                                    <a type="button" class="btn btn-sm btn-info" data-bs-toggle="modal"
+                                                        data-bs-target="#attendanceModal{{ $course->id }}">
+                                                        Create Attendance
+                                                    </a>
+                                                @endif
+                                                <div class="modal fade" id="attendanceModal{{ $course->id }}"
+                                                    tabindex="-1"
+                                                    aria-labelledby="attendanceModalLabel{{ $course->id }}">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title"
+                                                                    id="attendanceModalLabel{{ $course->id }}">Create
+                                                                    Attendance</h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form method="POST"
+                                                                    action="{{ route('storeeattendance') }}">
+                                                                    @csrf
+                                                                    @method('POST')
+                                                                    <div class="row">
+                                                                        <div class="col-md-6 mb-3">
+                                                                            <label for="date" class="form-label">Date
+                                                                                <span style="color: red"> *</span>
+                                                                            </label>
+                                                                            <input type="date" class="form-control"
+                                                                                name="date" placeholder="Select Date">
+                                                                        </div>
+                                                                        <div class="col-md-6 mb-3">
+                                                                            <label for="date" class="form-label">Time
+                                                                                <span style="color: red"> *</span>
+                                                                            </label>
+                                                                            <input type="time" class="form-control"
+                                                                                name="date" placeholder="Select Date">
+                                                                        </div>
+                                                                        <input type="hidden" name="course"
+                                                                            value="{{ $course->id }}">
+                                                                        <div class="col-md-12 form-group mb-2">
+                                                                            <a style="margin-right:3px;" href=""
+                                                                                class="btn btn-danger btn-sm">Cancel</a>
+                                                                            <input type="submit"
+                                                                                class="btn btn-success btn-sm">
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </form>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
-                                                <a type="button" class="btn btn-sm btn-info" data-bs-toggle="modal"
-                                                    data-bs-target="#attendanceModal{{ $course->id }}">
-                                                    Create Attendance
-                                                </a>
-                                            @endif
-                                            <div class="modal fade" id="attendanceModal{{ $course->id }}"
-                                                tabindex="-1" aria-labelledby="attendanceModalLabel{{ $course->id }}">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title"
-                                                                id="attendanceModalLabel{{ $course->id }}">Create
-                                                                Attendance</h5>
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form method="POST"
-                                                                action="{{ route('storeeattendance') }}">
-                                                                @csrf
-                                                                @method('POST')
-                                                                <div class="row">
-                                                                    <div class="col-md-6 mb-3">
-                                                                        <label for="date" class="form-label">Date
-                                                                            <span style="color: red"> *</span>
-                                                                        </label>
-                                                                        <input type="date" class="form-control"
-                                                                            name="date" placeholder="Select Date">
-                                                                    </div>
-                                                                    <div class="col-md-6 mb-3">
-                                                                        <label for="date" class="form-label">Time
-                                                                            <span style="color: red"> *</span>
-                                                                        </label>
-                                                                        <input type="time" class="form-control"
-                                                                            name="date" placeholder="Select Date">
-                                                                    </div>
-                                                                    <input type="hidden" name="course"
-                                                                        value="{{ $course->id }}">
-                                                                    <div class="col-md-12 form-group mb-2">
-                                                                        <a style="margin-right:3px;" href=""
-                                                                            class="btn btn-danger btn-sm">Cancel</a>
-                                                                        <input type="submit"
-                                                                            class="btn btn-success btn-sm">
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @endif
                                     </div>
                                     <div class="col-sm">
                                         {{-- <div class="d-flex justify-content-sm-end">
@@ -619,7 +634,7 @@
                                                                     ->first();
                                                             @endphp
                                                             @if ($studentAssignment)
-                                                            <h5>Uploaded Assignments</h5>
+                                                                <h5>Uploaded Assignments</h5>
                                                                 <div class="row">
                                                                     <div class="col">
                                                                         <p class="card-text">Upload Date:
@@ -640,11 +655,13 @@
                                                                 )->get();
                                                             @endphp
                                                             @foreach ($studentAssignments as $studentAssignment)
-                                                            <h5>Student Assignments</h5>
-                                                            @php
-                                                                $student = App\Models\User::find($studentAssignment->student_id);
+                                                                <h5>Student Assignments</h5>
+                                                                @php
+                                                                    $student = App\Models\User::find(
+                                                                        $studentAssignment->student_id,
+                                                                    );
 
-                                                            @endphp
+                                                                @endphp
                                                                 <div class="row">
                                                                     <div class="col">
                                                                         <p class="card-text">Upload Date:

@@ -68,12 +68,26 @@
     <div class="container-fluid">
         <div class="row">
             <?php $__currentLoopData = $courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php
+                    $isExpired = false;
+                    $today = date('Y-m-d');
+                    if ($course->end_date < $today) {
+                        $isExpired = true;
+                    }
+                ?>
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="card">
                         <div class="card-header ">
                             <div class="d-flex justify-content-between">
                                 <div class="col">
-                                    <h3 class="card-title text-primary text-bold"><?php echo e($course->name); ?></h3>
+                                    <h3 class="card-title text-primary text-bold"><?php echo e($course->name); ?>
+
+                                        <?php if($isExpired): ?>
+                                            <span class="badge bg-danger">
+                                                Unavailable
+                                            </span>
+                                        <?php endif; ?>
+                                    </h3>
                                 </div>
                                 <div>
                                     <a class="btn btn-sm btn-info" href="<?php echo e(route('showcourse', $course->id)); ?>">
@@ -148,11 +162,13 @@
                                         <?php echo e($course->students->count()); ?>
 
                                     </p>
-                                    <?php if(Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher')): ?>
-                                        <a type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#addStudentModal<?php echo e($course->id); ?>">
-                                            <i class="ri-user-add-line"></i>
-                                        </a>
+                                    <?php if(!$isExpired): ?>
+                                        <?php if(Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher')): ?>
+                                            <a type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#addStudentModal<?php echo e($course->id); ?>">
+                                                <i class="ri-user-add-line"></i>
+                                            </a>
+                                        <?php endif; ?>
                                     <?php endif; ?>
                                     <div class="modal fade" id="addStudentModal<?php echo e($course->id); ?>" tabindex="-1"
                                         aria-labelledby="exampleModalgridLabel">
@@ -199,11 +215,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <?php if(Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher')): ?>
-                                <a type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#attendanceModal<?php echo e($course->id); ?>">
-                                    Create Attendance
-                                </a>
+                            <?php if(!$isExpired): ?>
+                                <?php if(Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher')): ?>
+                                    <a type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                        data-bs-target="#attendanceModal<?php echo e($course->id); ?>">
+                                        Create Attendance
+                                    </a>
+                                <?php endif; ?>
                             <?php endif; ?>
                             <div class="modal fade
                                 "

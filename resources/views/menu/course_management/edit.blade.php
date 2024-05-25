@@ -35,15 +35,22 @@
                             @csrf
                             @method('POST')
                             <div class="row">
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-4 mb-3">
                                     <label for="name" class="form-label">Course Name
                                         <span style="color: red"> *</span>
                                     </label>
                                     <input required type="text" class="form-control" name="name"
                                         value="{{ $course->name }}" placeholder="Course Name">
                                 </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="code" class="form-label">Course Code
+                                        <span style="color: red"> *</span>
+                                    </label>
+                                    <input required type="text" class="form-control" name="code"
+                                        value="{{ $course->code }}" placeholder="Course Code">
+                                </div>
 
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-4 mb-3">
                                     <label for="teacher" class="form-label">Teacher
                                         <span style="color: red"> *</span>
                                     </label>

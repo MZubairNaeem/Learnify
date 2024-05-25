@@ -69,12 +69,25 @@
     <div class="container-fluid">
         <div class="row">
             @foreach ($courses as $course)
+                @php
+                    $isExpired = false;
+                    $today = date('Y-m-d');
+                    if ($course->end_date < $today) {
+                        $isExpired = true;
+                    }
+                @endphp
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="card">
                         <div class="card-header ">
                             <div class="d-flex justify-content-between">
                                 <div class="col">
-                                    <h3 class="card-title text-primary text-bold">{{ $course->name }}</h3>
+                                    <h3 class="card-title text-primary text-bold">{{ $course->name }}
+                                        @if ($isExpired)
+                                            <span class="badge bg-danger">
+                                                Unavailable
+                                            </span>
+                                        @endif
+                                    </h3>
                                 </div>
                                 <div>
                                     <a class="btn btn-sm btn-info" href="{{ route('showcourse', $course->id) }}">
@@ -148,11 +161,13 @@
                                     <p class="card-text mx-3">
                                         {{ $course->students->count() }}
                                     </p>
-                                    @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
-                                        <a type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#addStudentModal{{ $course->id }}">
-                                            <i class="ri-user-add-line"></i>
-                                        </a>
+                                    @if (!$isExpired)
+                                        @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                            <a type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#addStudentModal{{ $course->id }}">
+                                                <i class="ri-user-add-line"></i>
+                                            </a>
+                                        @endif
                                     @endif
                                     <div class="modal fade" id="addStudentModal{{ $course->id }}" tabindex="-1"
                                         aria-labelledby="exampleModalgridLabel">
@@ -199,11 +214,13 @@
                                     </div>
                                 </div>
                             </div>
-                            @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
-                                <a type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#attendanceModal{{ $course->id }}">
-                                    Create Attendance
-                                </a>
+                            @if (!$isExpired)
+                                @if (Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Teacher'))
+                                    <a type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                        data-bs-target="#attendanceModal{{ $course->id }}">
+                                        Create Attendance
+                                    </a>
+                                @endif
                             @endif
                             <div class="modal fade
                                 "
