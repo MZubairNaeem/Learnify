@@ -93,6 +93,13 @@ class AssignmentController extends Controller
             'file' => 'required',
         ]);
 
+        $assignment = Assignment::findOrFail($request->assignment_id);
+
+        //if duedate is less than today date
+        if (strtotime($assignment->due_date) < strtotime(date('Y-m-d'))) {
+            return redirect()->back()->with('warning', 'Due date for this assignment has passed');
+        }
+
         if ($validator->fails()) {
             return redirect()->back()->with('warning', 'All fields are required')->withErrors($validator)->withInput();
         }
