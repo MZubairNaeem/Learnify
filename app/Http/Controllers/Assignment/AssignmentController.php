@@ -31,6 +31,12 @@ class AssignmentController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->with('warning', 'All fields are required')->withErrors($validator)->withInput();
         }
+        
+
+        //if duedate is less than today date
+        if (strtotime($request->due_date) < strtotime(date('Y-m-d'))) {
+            return redirect()->back()->with('warning', 'Due date cannot be less than today date');
+        }
 
         $assignment = new Assignment();
         $assignment->title = $request->title;
